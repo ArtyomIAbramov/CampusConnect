@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "CampusConnect"
 include(":app")
- 
+include(":API")
+include(":DataBase")
