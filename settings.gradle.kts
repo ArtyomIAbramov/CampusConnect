@@ -23,3 +23,4 @@ rootProject.name = "CampusConnect"
 include(":app")
 include(":API")
 include(":DataBase")
+include(":Data")

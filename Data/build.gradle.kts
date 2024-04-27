@@ -1,11 +1,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "dev.cremenb.database"
+    namespace = "dev.cremenb.data"
     compileSdk = 34
 
     defaultConfig {
@@ -34,11 +33,11 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.junit.ktx)
-    ksp (libs.androidx.room.compiler)
-    implementation(libs.androidx.room)
     implementation(libs.kotlinx.coroutines.android)
-    implementation (libs.androidx.room.ktx)
-    api(libs.androidx.room.ktx)
+
+    implementation(project(":DataBase"))
+    implementation(project(":API"))
+    implementation(libs.androidx.junit.ktx)
 }
