@@ -6,22 +6,16 @@ import androidx.room.DatabaseConfiguration
 import androidx.room.InvalidationTracker
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
 import androidx.sqlite.db.SupportSQLiteOpenHelper
 import dev.cremenb.database.dao.IProfileDao
 import dev.cremenb.database.models.ProfileDbo
 
 @Database(entities = [ProfileDbo::class], version = 1)
-abstract class DataBase : RoomDatabase() {
+abstract class DataBase() : RoomDatabase() {
 
-    abstract  fun profileDao() : IProfileDao
+    abstract fun profileDao() : IProfileDao
 
-    fun DataBase (applicationContext: Context): DataBase {
-        return Room.databaseBuilder(
-            checkNotNull(applicationContext.applicationContext),
-            DataBase::class.java,
-            "CampusConnect"
-        ).build()
-    }
     override fun clearAllTables() {
         TODO("Not yet implemented")
     }
@@ -33,4 +27,12 @@ abstract class DataBase : RoomDatabase() {
     override fun createOpenHelper(config: DatabaseConfiguration): SupportSQLiteOpenHelper {
         TODO("Not yet implemented")
     }
+}
+
+fun DataBase (applicationContext: Context): DataBase {
+    return Room.databaseBuilder(
+        checkNotNull(applicationContext.applicationContext),
+        DataBase::class.java,
+        "CampusConnect"
+    ).build()
 }

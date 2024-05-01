@@ -40,4 +40,6 @@ dependencies {
     implementation(project(":DataBase"))
     implementation(project(":API"))
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.retrofit)
+    implementation(libs.jakarta.inject)
 }
