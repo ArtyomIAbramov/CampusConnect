@@ -16,4 +16,5 @@ dependencies{
     implementation(libs.androidx.annotation)
     implementation(libs.retrofit.kotlinx.serialization.converter)
     implementation(libs.retrofit.adapters.result)
+    implementation(libs.retrofit.converter)
 }

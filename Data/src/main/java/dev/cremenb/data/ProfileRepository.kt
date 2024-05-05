@@ -1,66 +1,50 @@
 package dev.cremenb.data
 
 import dev.cremenb.api.IProfile
-import dev.cremenb.api.models.ProfileDto
-import dev.cremenb.data.models.Profile
+import dev.cremenb.api.models.Profile
 import dev.cremenb.data.models.RequestResult
+import dev.cremenb.data.models.handleApi
 import dev.cremenb.database.DataBase
-import dev.cremenb.database.models.ProfileDbo
 import jakarta.inject.Inject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.onEach
+
 
 class ProfileRepository @Inject constructor(
     private val db : DataBase,
     private val api : IProfile,
 ) {
-    fun getProfile(
-        mergeStrategy: MergeStrategy<RequestResult<Profile>> = RequestResultMergeStrategy()
-    ) : Flow<RequestResult<Profile>> {
 
-        val localCache: Flow<RequestResult<Profile>> = getProfileFromDataBase()
+    suspend fun getProfile() : RequestResult<Profile> {
 
-        val remote: Flow<RequestResult<Profile>> = getProfileFromServer()
+        val remote = handleApi { api.getProfile() }
 
-        return localCache.combine(remote, mergeStrategy::merge)
-        }
-    private fun getProfileFromServer(): Flow<RequestResult<Profile>> {
-        val apiRequest = flow{ emit(api.getProfile())}
-            .onEach { result ->
-                if(result.isSuccess)
-                {
-                    val dtos = result.getOrNull()?.body()?.toProfileDbo()
-                    if (dtos != null)
-                        db.profileDao().insertProfile(dtos)
-                }
+        when (val response = remote) {
+            is RequestResult.Success -> {
+                return remote
             }
-            .map { response -> response.map { it.body()!! }}
-            .map { it.toRequestResult() }
-            .map {result -> result.map { it!!.toProfile() }}
 
-        val start = flowOf<RequestResult<Profile>>(RequestResult.InProgress())
-        return merge(apiRequest, start)
+            is RequestResult.Error -> {
+                val localCache: Profile = getProfileFromDataBase()
+                return RequestResult.Success(localCache)
+            }
+
+            is RequestResult.Exception -> {
+                val localCache: Profile = getProfileFromDataBase()
+                return RequestResult.Success(localCache)
+            }
+        }
     }
 
-    private fun getProfileFromDataBase(): Flow<RequestResult<Profile>> {
+    private fun getProfileFromDataBase(): Profile {
+
         val dbRequest = db
             .profileDao()
             .getProfile()
-            .map { RequestResult.Success(it) }
-            .map {result -> result.map { it!!.toProfile() }}
 
-        val start = flowOf<RequestResult<Profile>>(RequestResult.InProgress())
+        if(dbRequest == null)
+        {
+            return Profile(1,"DanyaLox","danylalox@sobaka.ry", "sfdsdf", "rwer", "wefewf")
+        }
 
-        return merge(start, dbRequest)
-    }
-
-    fun fetchLatest(): Flow<RequestResult<Profile>> {
-        return getProfileFromServer()
-        TODO("Not yet implemented")
+        return dbRequest.toProfile()
     }
 }

@@ -19,7 +19,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "API_KEY", "\"\"")
-        buildConfigField("String", "API_BASE_URL", "\"\"")
+        buildConfigField("String", "API_BASE_URL", "\"http://202.181.148.90:8080/api/\"")
     }
 
     buildTypes {
@@ -62,11 +62,14 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.converter)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
+    implementation(libs.kotlinx.coroutines.android)
 
     implementation(project(":Data"))
     implementation(project(":DataBase"))
     implementation(project(":API"))
+    implementation(project(":utilities"))
 }

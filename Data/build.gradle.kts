@@ -42,4 +42,5 @@ dependencies {
     implementation(libs.androidx.junit.ktx)
     implementation(libs.retrofit)
     implementation(libs.jakarta.inject)
+    implementation(libs.play.services.basement)
 }

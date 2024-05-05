@@ -1,26 +1,28 @@
 package dev.cremenb.data.models
 
-sealed class RequestResult<T> (
-    private val data: T? = null
-) {
-    class InProgress<T>(data: T? = null) : RequestResult<T>(data)
-    class Success<T>(data: T) : RequestResult<T>(data)
-    class Error<T>(data: T? = null, val error: Throwable? = null): RequestResult<T>()
+import retrofit2.HttpException
+import retrofit2.Response
 
-    fun requireData(): T = checkNotNull(data)
-
-    fun getData() : T? = data
-
-    fun<O> map(mapper : (T) -> O): RequestResult<O>{
-        return when(this)
-        {
-            is Success -> {
-                val outData = mapper(requireData())
-                RequestResult.Success(outData)
-            }
-            is Error -> RequestResult.Error(data?.let(mapper))
-            is InProgress -> RequestResult.InProgress(data?.let(mapper))
-        }
-    }
+sealed class RequestResult<T : Any> {
+    class Success<T: Any>(val data: T) : RequestResult<T>()
+    class Error<T: Any>(val code: Int, val message: String?) : RequestResult<T>()
+    class Exception<T: Any>(val e: Throwable) : RequestResult<T>()
 }
 
+suspend fun <T : Any> handleApi(
+    execute: suspend () -> Response<T>
+): RequestResult<T> {
+    return try {
+        val response= execute()
+        val body = response.body()
+        if (response.isSuccessful && body != null) {
+            RequestResult.Success(body)
+        } else {
+            RequestResult.Error(code = response.code(), message = response.message())
+        }
+    } catch (e: HttpException) {
+        RequestResult.Error(code = e.code(), message = e.message())
+    } catch (e: Throwable) {
+        RequestResult.Exception(e)
+    }
+}
