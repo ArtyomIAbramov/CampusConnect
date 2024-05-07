@@ -72,4 +72,7 @@ dependencies {
     implementation(project(":DataBase"))
     implementation(project(":API"))
     implementation(project(":utilities"))
+
+
+    implementation (libs.lottie)
 }
