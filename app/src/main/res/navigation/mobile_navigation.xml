@@ -12,33 +12,44 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_register"
-        android:name="dev.cremenb.campus_connect.ui.registration.RegistrationFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_registration" />
+        android:id="@+id/navigation_card"
+        android:name="dev.cremenb.campus_connect.ui.card.CardFragment"
+        android:label="@string/title_card"
+        tools:layout="@layout/fragment_card" >
+        <action
+            android:id="@+id/action_navigation_card_to_navigation_events"
+            app:destination="@id/navigation_events"
+            app:restoreState="true"/>
+        <action
+            android:id="@+id/action_navigation_card_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+
+    </fragment>
 
     <fragment
-        android:id="@+id/navigation_autorization"
-        android:name="dev.cremenb.campus_connect.ui.authorization.AuthorizationFragment"
-        android:label="auto"
-        tools:layout="@layout/fragment_authorization" />
-
-    <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="dev.cremenb.campus_connect.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_events"
+        android:name="dev.cremenb.campus_connect.ui.events.EventsFragment"
+        android:label="@string/title_events"
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_navigation_events_to_navigation_card"
+            app:destination="@id/navigation_card" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="dev.cremenb.campus_connect.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_nothing"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="dev.cremenb.campus_connect.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_card"
+            app:destination="@id/navigation_card" />
+    </fragment>
 
 </navigation>
