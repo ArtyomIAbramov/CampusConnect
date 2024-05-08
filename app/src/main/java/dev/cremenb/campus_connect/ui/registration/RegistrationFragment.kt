@@ -1,4 +1,4 @@
-package dev.cremenb.campus_connect.ui.profile
+package dev.cremenb.campus_connect.ui.registration
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -9,25 +9,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.AndroidEntryPoint
-import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
+import dev.cremenb.api.models.Profile
+import dev.cremenb.campus_connect.R
+import dev.cremenb.campus_connect.databinding.FragmentRegistrationBinding
 import dev.cremenb.data.models.RequestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class RegistrationFragment : Fragment() {
 
-    private var _binding: FragmentProfileBinding? = null
+    companion object {
+        fun newInstance() = RegistrationFragment()
+    }
 
-    private val viewModel: ProfileViewModel by viewModels()
+    private var _binding : FragmentRegistrationBinding? = null
+
     private val binding get() = _binding!!
+
+    private val viewModel: RegistrationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
     }
 
     override fun onCreateView(
@@ -35,31 +39,30 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textViewError: TextView = binding.error
-        val textViewLoading: TextView = binding.loading
         val textViewNone: TextView = binding.none
 
         val textViewHello: TextView = binding.hello
-
+        val profile = Profile(null, "Artem2","Artem","Artem6",2 ,"Artem","Artem",null,"Artem")
         viewModel.viewModelScope.launch {
             withContext(Dispatchers.IO)
             {
-                val response = viewModel.repository.getProfile()
+                val response = viewModel.repository.register(profile)
                 withContext(Dispatchers.Main)
                 {
                     when (response){
                         is RequestResult.Success -> {
-                            textViewHello.text = response.data?.name
+                            textViewHello.text = "horosho"
                         }
                         is RequestResult.Error -> {
-                            textViewError.text = response.message
+                            textViewError.text = "ploho"
                         }
 
                         is RequestResult.Exception -> {
-                            textViewNone.text = response.e.message
+                            textViewNone.text = "ploho"
                         }
                     }
                 }

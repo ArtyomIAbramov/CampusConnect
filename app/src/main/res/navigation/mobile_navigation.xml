@@ -12,6 +12,18 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
+        android:id="@+id/navigation_register"
+        android:name="dev.cremenb.campus_connect.ui.registration.RegistrationFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_registration" />
+
+    <fragment
+        android:id="@+id/navigation_autorization"
+        android:name="dev.cremenb.campus_connect.ui.authorization.AuthorizationFragment"
+        android:label="auto"
+        tools:layout="@layout/fragment_authorization" />
+
+    <fragment
         android:id="@+id/navigation_dashboard"
         android:name="dev.cremenb.campus_connect.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"

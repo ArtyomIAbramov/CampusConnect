@@ -13,6 +13,9 @@ interface IProfileDao {
     @Query("SELECT * FROM Profile")
     fun getProfile() : ProfileDbo?
 
+    @Query("SELECT token FROM Profile")
+    fun getToken() : String?
+
     @Insert
     fun insertProfile(profile : ProfileDbo)
 
