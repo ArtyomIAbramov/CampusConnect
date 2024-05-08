@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.splash.SplashScreenFragment">
+    >
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
+        android:id="@+id/ltAnimation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:lottie_rawRes="@raw/progress_animation"

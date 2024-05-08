@@ -1,5 +1,6 @@
 package dev.cremenb.campus_connect.ui.profile
 
+import SplashScreenFragment
 import android.app.AlertDialog
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,12 +8,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
-import dev.cremenb.campus_connect.ui.splash.SplashScreenFragment
 import dev.cremenb.data.models.RequestResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,14 +47,14 @@ class ProfileFragment : Fragment() {
         val textViewHello: TextView = binding.hello
 
 
-        // Создаем экземпляр SplashScreenFragment
-        val splashFragment = SplashScreenFragment()
-        // Показываем SplashScreenFragment
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, splashFragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        val button:Button=binding.profileButton
 
+        button.setOnClickListener {
+            val fragment = SplashScreenFragment()
+            val transaction = FragmentActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment_container, fragment)
+            transaction.commit()
+        }
 
         viewModel.viewModelScope.launch {
             withContext(Dispatchers.IO)
