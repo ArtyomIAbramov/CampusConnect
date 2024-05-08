@@ -12,4 +12,5 @@ class ProfileDbo (
     @ColumnInfo("genderId") val genderId : Int?,
     @ColumnInfo("phone") val phone : String?,
     @ColumnInfo("email") val email : String?,
+    @ColumnInfo("token") val token : String?,
 )

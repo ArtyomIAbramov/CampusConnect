@@ -2,6 +2,7 @@ package dev.cremenb.data
 
 import dev.cremenb.api.IProfile
 import dev.cremenb.api.models.Profile
+import dev.cremenb.api.models.University
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
 import dev.cremenb.database.DataBase
@@ -42,7 +43,9 @@ class ProfileRepository @Inject constructor(
 
         if(dbRequest == null)
         {
-            return Profile(1,"DanyaLox","danylalox@sobaka.ry", "sfdsdf", "rwer", "wefewf")
+            return Profile("qwe","DanyaLox",
+                "danylalox@sobaka.ry","DanyaLox", 1, "rwer",
+                "wefewf", "fsdf", "DanyaLox")
         }
 
         return dbRequest.toProfile()
