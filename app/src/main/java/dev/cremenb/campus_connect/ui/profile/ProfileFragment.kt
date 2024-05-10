@@ -12,6 +12,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
 import EventAdapter
+import androidx.lifecycle.viewModelScope
+import dev.cremenb.data.models.RequestResult
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -45,14 +50,11 @@ class ProfileFragment : Fragment() {
                 {
                     when (response){
                         is RequestResult.Success -> {
-                            textViewHello.text = response.data?.name
                         }
                         is RequestResult.Error -> {
-                            textViewError.text = response.message
                         }
 
                         is RequestResult.Exception -> {
-                            textViewNone.text = response.e.message
                         }
                         is RequestResult.InProgress ->
                         {
