@@ -19,7 +19,7 @@ class AuthorizationRepository @Inject constructor(
         return when (response) {
             is RequestResult.Success -> {
                 db.profileDao().insertProfile(response.data!!.toProfileDbo())
-                return RequestResult.Success()
+                return RequestResult.Success(response.data)
             }
 
             is RequestResult.Error -> {

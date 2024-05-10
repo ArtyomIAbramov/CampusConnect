@@ -37,8 +37,9 @@ class RegistrationFragment : Fragment() {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setButtonsClickListener()
+        viewModel.getUniversities()
 
+        setButtonsClickListener()
         observeRegistrationResult()
 
         return root
@@ -57,6 +58,24 @@ class RegistrationFragment : Fragment() {
             when (result) {
                 is RequestResult.Success -> {
                     findNavController().navigate(R.id.action_navigation_registration_to_navigation_home)
+                }
+                is RequestResult.Error -> {
+                    // Обработка ошибки
+                }
+                is RequestResult.Exception -> {
+                    // Обработка исключения
+                }
+                is RequestResult.InProgress -> {
+                    // Обработка состояния в процессе
+                }
+                // Другие возможные состояния
+            }
+        }
+
+        viewModel.universitiesResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    binding.button3.text = result.data.toString()
                 }
                 is RequestResult.Error -> {
                     // Обработка ошибки
