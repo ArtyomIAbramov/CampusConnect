@@ -8,8 +8,7 @@ data class Event (
     val thumbnail : String?,
     val description : String?,
     val date : Date?,
-    val status : String?,
-    val address : String?,
-    val place : Place?,
-    val events : MutableList<Event> = mutableListOf()
+    val place: Place?,
+    val status : EventStatus?,
+    val users : List<Profile>?,
 )

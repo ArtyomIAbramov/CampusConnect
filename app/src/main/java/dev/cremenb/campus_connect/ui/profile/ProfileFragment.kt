@@ -7,13 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
 import dev.cremenb.data.models.RequestResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 @AndroidEntryPoint
@@ -27,6 +23,7 @@ class ProfileFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel.getProfile()
         // TODO: Use the ViewModel
     }
 
@@ -38,38 +35,22 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textViewError: TextView = binding.error
-        val textViewLoading: TextView = binding.loading
-        val textViewNone: TextView = binding.none
-
         val textViewHello: TextView = binding.hello
 
-        viewModel.viewModelScope.launch {
-            withContext(Dispatchers.IO)
-            {
-                val response = viewModel.repository.getProfile()
-                withContext(Dispatchers.Main)
-                {
-                    when (response){
-                        is RequestResult.Success -> {
-                            textViewHello.text = response.data?.name
-                        }
-                        is RequestResult.Error -> {
-                            textViewError.text = response.message
-                        }
-
-                        is RequestResult.Exception -> {
-                            textViewNone.text = response.e.message
-                        }
-                        is RequestResult.InProgress ->
-                        {
-
-                        }
-                    }
+        viewModel.profileResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    textViewHello.text = result.data.toString()
                 }
+                is RequestResult.Error -> {
+                }
+
+                is RequestResult.Exception -> {
+                }
+
+                is RequestResult.InProgress -> {}
             }
         }
-
         return root
     }
 

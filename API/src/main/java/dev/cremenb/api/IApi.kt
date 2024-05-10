@@ -8,12 +8,12 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface IProfile{
-    @GET("users?email=user@example.com")
-    suspend fun getProfile() : Response<Profile>
+    @GET("Users/getbylogin")
+    suspend fun getProfileBylogin(@Query("login") login: String) : Response<Profile>
 }
 
 interface IRegistration{

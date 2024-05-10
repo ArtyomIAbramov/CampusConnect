@@ -10,7 +10,9 @@ data class Profile(
     val email : String?,
     val token : String?,
     val university : University?,
-    val avatar : String?,
+    val events : MutableList<Event>?,
+    val bookings : MutableList<Booking>?,
+    val profileImageUrl : String?,
     val card : String?,
 )
 

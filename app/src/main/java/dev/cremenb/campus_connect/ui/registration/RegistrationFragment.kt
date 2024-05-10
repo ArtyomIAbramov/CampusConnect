@@ -49,7 +49,7 @@ class RegistrationFragment : Fragment() {
     {
         binding.button3.setOnClickListener {
             //TODO("сделать дизайн и получать данные из диза")
-            viewModel.register("Artem2","Artem","Artem63435627",2 ,"Artem",1)
+            viewModel.register("Artem2","Artem","eqweqwert",2 ,"Artem",1)
         }
     }
     private fun observeRegistrationResult()
