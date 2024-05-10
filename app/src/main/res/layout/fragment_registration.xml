@@ -3,34 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_black_grey"
     tools:context=".ui.registration.RegistrationFragment">
 
-    <TextView
-        android:id="@+id/hello"
+
+    <Button
+        android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello" />
-
-    <TextView
-        android:id="@+id/error"
-        android:layout_marginLeft="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Error" />
-
-    <TextView
-        android:id="@+id/none"
-        android:layout_marginLeft="200dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="None" />
-
-    <TextView
-        android:id="@+id/loading"
-        android:layout_marginLeft="300dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="registration" />
-
+        android:layout_gravity="center"
+        android:text="Button" />
 </FrameLayout>

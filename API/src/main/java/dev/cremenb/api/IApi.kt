@@ -1,6 +1,8 @@
 package dev.cremenb.api
 
+import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Profile
+import dev.cremenb.api.models.Register
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -15,12 +17,12 @@ interface IProfile{
 
 interface IRegistration{
     @POST("users/register")
-    suspend fun register(@Body profile: Profile) : Response<Void>
+    suspend fun register(@Body register: Register) : Response<Void>
 }
 
 interface IAuthorization{
     @POST("users/login")
-    suspend fun login(@Body profile: Profile) : Response<Profile>
+    suspend fun login(@Body login: Login) : Response<Profile>
 
     @GET("users/verify")
     suspend fun isAuthenticated(@Header("Authorization") token: String) : Response<Void>

@@ -68,6 +68,8 @@ dependencies {
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.kotlinx.coroutines.android)
 
+    implementation (libs.lottie)
+
     implementation(project(":Data"))
     implementation(project(":DataBase"))
     implementation(project(":API"))

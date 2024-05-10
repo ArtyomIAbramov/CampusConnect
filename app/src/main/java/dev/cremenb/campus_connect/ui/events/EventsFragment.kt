@@ -7,9 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.fragment.findNavController
-import dev.cremenb.campus_connect.R
-import dev.cremenb.campus_connect.databinding.FragmentCardBinding
 import dev.cremenb.campus_connect.databinding.FragmentEventsBinding
 
 class EventsFragment : Fragment() {
@@ -39,7 +36,6 @@ class EventsFragment : Fragment() {
         val button : Button = binding.button
 
         button.setOnClickListener {
-            findNavController().navigate(R.id.action_navigation_events_to_navigation_card)
         }
         return root
     }

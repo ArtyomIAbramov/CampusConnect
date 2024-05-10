@@ -1,5 +1,6 @@
 package dev.cremenb.campus_connect
 
+import androidx.navigation.fragment.NavHostFragment
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.WindowManager
@@ -18,13 +19,17 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    lateinit var navView: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.hide()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+        navView = binding.navView
 
         val activeColor = ContextCompat.getColor(this, R.color.primary_purple_100)
         val inactiveColor = ContextCompat.getColor(this, R.color.primary_yellow_200)
@@ -40,7 +45,6 @@ class MainActivity : AppCompatActivity() {
             )
         )
 
-        val iconColor = ContextCompat.getColorStateList(this, R.color.primary_yellow_200)
         navView.itemIconTintList = colorStateList
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

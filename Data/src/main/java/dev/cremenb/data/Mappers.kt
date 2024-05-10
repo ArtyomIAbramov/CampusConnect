@@ -5,17 +5,30 @@ import dev.cremenb.database.models.ProfileDbo
 
 fun Profile.toProfileDbo() : ProfileDbo{
     return ProfileDbo(
-        this.id!!,
+        this.id,
         this.name,
         this.surname,
-        this.genderId,
+        this.login,
         this.phone,
         this.email,
-        this.token
+        this.token,
+        this.avatar,
+        this.card,
     )
 }
 
-fun ProfileDbo.toProfile(): Profile
-{
-    TODO("Not yet implemented")
+fun ProfileDbo.toProfile(): Profile {
+    return Profile(
+        this.id,
+        this.name,
+        this.surname,
+        this.login,
+        null,
+        this.phone,
+        this.email,
+        this.token,
+        null,
+        this.avatar,
+        this.card,
+    )
 }

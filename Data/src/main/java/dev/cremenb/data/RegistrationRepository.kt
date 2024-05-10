@@ -1,19 +1,17 @@
 package dev.cremenb.data
 
-import dev.cremenb.api.IAuthorization
 import dev.cremenb.api.IRegistration
-import dev.cremenb.api.models.Profile
+import dev.cremenb.api.models.Register
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
-import dev.cremenb.database.DataBase
 import jakarta.inject.Inject
 
 class RegistrationRepository  @Inject constructor(
     private val api : IRegistration,
 ) {
-    suspend fun register(profile: Profile) : RequestResult<Void> {
+    suspend fun register(register: Register) : RequestResult<Void> {
 
-        val response = handleApi { api.register(profile)}
+        val response = handleApi { api.register(register)}
 
         return when (response) {
             is RequestResult.Success -> {
@@ -27,6 +25,7 @@ class RegistrationRepository  @Inject constructor(
             is RequestResult.Exception -> {
                 RequestResult.Exception(response.e)
             }
+            is RequestResult.InProgress -> RequestResult.InProgress()
         }
     }
 }

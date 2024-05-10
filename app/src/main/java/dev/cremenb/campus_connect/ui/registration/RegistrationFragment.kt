@@ -6,16 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.lifecycle.viewModelScope
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.cremenb.api.models.Profile
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentRegistrationBinding
 import dev.cremenb.data.models.RequestResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
@@ -42,34 +37,39 @@ class RegistrationFragment : Fragment() {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textViewError: TextView = binding.error
-        val textViewNone: TextView = binding.none
+        setButtonsClickListener()
 
-        val textViewHello: TextView = binding.hello
-        val profile = Profile(null, "Artem2","Artem","Artem6",2 ,"Artem","Artem",null,"Artem")
-        viewModel.viewModelScope.launch {
-            withContext(Dispatchers.IO)
-            {
-                val response = viewModel.repository.register(profile)
-                withContext(Dispatchers.Main)
-                {
-                    when (response){
-                        is RequestResult.Success -> {
-                            textViewHello.text = "horosho"
-                        }
-                        is RequestResult.Error -> {
-                            textViewError.text = "ploho"
-                        }
-
-                        is RequestResult.Exception -> {
-                            textViewNone.text = "ploho"
-                        }
-                    }
-                }
-            }
-        }
+        observeRegistrationResult()
 
         return root
+    }
+
+    private fun setButtonsClickListener()
+    {
+        binding.button3.setOnClickListener {
+            //TODO("сделать дизайн и получать данные из диза")
+            viewModel.register("Artem2","Artem","Artem63435627",2 ,"Artem",1)
+        }
+    }
+    private fun observeRegistrationResult()
+    {
+        viewModel.registrationResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    findNavController().navigate(R.id.action_navigation_registration_to_navigation_home)
+                }
+                is RequestResult.Error -> {
+                    // Обработка ошибки
+                }
+                is RequestResult.Exception -> {
+                    // Обработка исключения
+                }
+                is RequestResult.InProgress -> {
+                    // Обработка состояния в процессе
+                }
+                // Другие возможные состояния
+            }
+        }
     }
 
     override fun onDestroyView() {

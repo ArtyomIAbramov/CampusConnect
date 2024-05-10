@@ -32,6 +32,6 @@ fun DataBase (applicationContext: Context): DataBase {
     return Room.databaseBuilder(
         checkNotNull(applicationContext.applicationContext),
         DataBase::class.java,
-        "CampusConnect"
+        "CampusConnect2"
     ).build()
 }

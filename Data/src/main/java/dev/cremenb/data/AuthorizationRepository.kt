@@ -1,6 +1,7 @@
 package dev.cremenb.data
 
 import dev.cremenb.api.IAuthorization
+import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Profile
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
@@ -11,13 +12,14 @@ class AuthorizationRepository @Inject constructor(
     private val db : DataBase,
     private val api : IAuthorization,
 ) {
-    suspend fun login(lodinData : Profile) : RequestResult<Profile> {
+    suspend fun login(lodinData : Login) : RequestResult<Profile> {
 
         val response = handleApi { api.login(lodinData)}
 
         return when (response) {
             is RequestResult.Success -> {
-                response
+                db.profileDao().insertProfile(response.data!!.toProfileDbo())
+                return RequestResult.Success()
             }
 
             is RequestResult.Error -> {
@@ -27,6 +29,7 @@ class AuthorizationRepository @Inject constructor(
             is RequestResult.Exception -> {
                 RequestResult.Exception(response.e)
             }
+            is RequestResult.InProgress -> RequestResult.InProgress()
         }
     }
 
@@ -38,25 +41,7 @@ class AuthorizationRepository @Inject constructor(
 
         if(token == null)
         {
-            val profile = Profile(null, "Artem2","Artem","Artem6",2 ,"Artem","Artem",null,"Artem")
-            val response = handleApi { api.login(profile)}
-
-            when (response) {
-                is RequestResult.Success -> {
-                    db.profileDao().insertProfile(response.data!!.toProfileDbo())
-                    return RequestResult.Success()
-                }
-
-                is RequestResult.Error -> {
-                    return RequestResult.Error(response.code, response.message)
-                }
-
-                is RequestResult.Exception -> {
-                    return RequestResult.Exception(response.e)
-                }
-            }
-            //return RequestResult.Error(401, "Token doesn`t found" )
-
+            return RequestResult.Error(401, "Token doesn`t found" )
         }
         else
         {
@@ -74,6 +59,7 @@ class AuthorizationRepository @Inject constructor(
                 is RequestResult.Exception -> {
                     RequestResult.Exception(response.e)
                 }
+                is RequestResult.InProgress -> RequestResult.InProgress()
             }
         }
     }

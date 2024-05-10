@@ -61,6 +61,10 @@ class ProfileFragment : Fragment() {
                         is RequestResult.Exception -> {
                             textViewNone.text = response.e.message
                         }
+                        is RequestResult.InProgress ->
+                        {
+
+                        }
                     }
                 }
             }

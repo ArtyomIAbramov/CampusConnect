@@ -1,13 +1,13 @@
 package dev.cremenb.campus_connect.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.cremenb.data.AuthorizationRepository
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor (
+    val repository: AuthorizationRepository
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
 }
