@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">CampusConnect</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Главная</string>
+    <string name="title_card">Карта</string>
+    <string name="title_events">Мероприятия</string>
+    <string name="title_nothing">NOTHING</string>
     <string name="title_profile">Профиль</string>
 </resources>

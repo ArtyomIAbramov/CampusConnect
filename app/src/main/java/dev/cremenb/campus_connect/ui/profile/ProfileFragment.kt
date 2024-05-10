@@ -37,7 +37,31 @@ class ProfileFragment : Fragment() {
         eventAdapter = EventAdapter(requireActivity(), viewModel.getEvents())
         eventRecyclerView.adapter = eventAdapter
 
-        // TODO: здесь добавить переход на каждый элемент (статичный)
+        viewModel.viewModelScope.launch {
+            withContext(Dispatchers.IO)
+            {
+                val response = viewModel.repository.getProfile()
+                withContext(Dispatchers.Main)
+                {
+                    when (response){
+                        is RequestResult.Success -> {
+                            textViewHello.text = response.data?.name
+                        }
+                        is RequestResult.Error -> {
+                            textViewError.text = response.message
+                        }
+
+                        is RequestResult.Exception -> {
+                            textViewNone.text = response.e.message
+                        }
+                        is RequestResult.InProgress ->
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
 
         return root
     }

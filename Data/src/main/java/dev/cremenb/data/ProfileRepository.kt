@@ -17,34 +17,25 @@ class ProfileRepository @Inject constructor(
 
         val remote = handleApi { api.getProfile() }
 
-        when (val response = remote) {
+        return when (val response = remote) {
             is RequestResult.Success -> {
-                return remote
+                remote
             }
 
-            is RequestResult.Error -> {
-                val localCache: Profile = getProfileFromDataBase()
-                return RequestResult.Success(localCache)
+            is RequestResult.Error, is RequestResult.Exception-> {
+                getProfileFromDataBase()
             }
 
-            is RequestResult.Exception -> {
-                val localCache: Profile = getProfileFromDataBase()
-                return RequestResult.Success(localCache)
-            }
+            is RequestResult.InProgress -> RequestResult.InProgress()
         }
     }
 
-    private fun getProfileFromDataBase(): Profile {
+    private fun getProfileFromDataBase(): RequestResult<Profile> {
 
         val dbRequest = db
             .profileDao()
-            .getProfile()
+            .getProfile() ?: return RequestResult.Error(404, "")
 
-        if(dbRequest == null)
-        {
-            return Profile(1,"DanyaLox","danylalox@sobaka.ry", "sfdsdf", "rwer", "wefewf")
-        }
-
-        return dbRequest.toProfile()
+        return RequestResult.Success(dbRequest.toProfile())
     }
 }
