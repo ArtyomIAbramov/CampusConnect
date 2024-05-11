@@ -1,5 +1,6 @@
 package dev.cremenb.api
 
+import dev.cremenb.api.models.Event
 import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Profile
 import dev.cremenb.api.models.Register
@@ -32,4 +33,9 @@ interface IAuthorization{
 interface IUniversity{
     @GET("universities/")
     suspend fun getUniversities() : Response<List<University>>
+}
+
+interface IEvents{
+    @GET("events/")
+    suspend fun getEvents() : Response<List<Event>>
 }

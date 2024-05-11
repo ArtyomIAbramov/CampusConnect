@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.databinding.FragmentEventsBinding
 
+@AndroidEntryPoint
 class EventsFragment : Fragment() {
 
     companion object {
