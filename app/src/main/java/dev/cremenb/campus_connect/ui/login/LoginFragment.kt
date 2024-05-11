@@ -6,16 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentLoginBinding
 import dev.cremenb.data.models.RequestResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -43,7 +39,7 @@ class LoginFragment : Fragment() {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         setButtonsClickListener()
-        observeRegistrationResult()
+        observeResults()
 
         val root: View = binding.root
         return root
@@ -52,7 +48,8 @@ class LoginFragment : Fragment() {
     private fun setButtonsClickListener()
     {
         binding.button2.setOnClickListener {
-            viewModel.login("Artem2", "Artem")
+            viewModel.login("Arteasdzm63sdf435627", "Artem")
+
         }
 
         binding.button3.setOnClickListener {
@@ -60,7 +57,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun observeRegistrationResult()
+    private fun observeResults()
     {
         viewModel.loginResult.observe(viewLifecycleOwner) { result ->
             when (result) {
