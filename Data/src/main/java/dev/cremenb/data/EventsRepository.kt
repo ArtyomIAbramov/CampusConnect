@@ -2,18 +2,15 @@ package dev.cremenb.data
 
 import dev.cremenb.api.IEvents
 import dev.cremenb.api.models.Event
-import dev.cremenb.api.models.Login
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
-import dev.cremenb.database.DataBase
 import jakarta.inject.Inject
 
 class EventsRepository @Inject constructor(
-    private val db : DataBase,
     private val api : IEvents,
 )
 {
-    suspend fun getAllEvents(lodinData : Login) : RequestResult<List<Event>> {
+    suspend fun getAllEvents() : RequestResult<List<Event>> {
 
         val response = handleApi { api.getEvents()}
 

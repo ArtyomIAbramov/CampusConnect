@@ -1,19 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.events.EventsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginStart="20dp"
+        app:layout_constraintCircleRadius="30dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/ic_back"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
-
-    <Button
-        android:id="@+id/button"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="@string/title_events"
+        android:textColor="@color/primary_black_grey"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/montserrat_bold"/>
 
-</FrameLayout>
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:layout_marginTop="10dp"
+        android:queryHint="Поиск..."
+        android:queryBackground="@null"
+        android:background="@drawable/searchview_rounded_background"
+        android:iconifiedByDefault="false"/>
+
+    <Button
+        android:id="@+id/button_sport"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textSize="10sp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/ic_back"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="@string/button_sport"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:elevation="4dp"/>
+
+    <Button
+        android:id="@+id/button_study"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textSize="10sp"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/ic_back"
+        android:backgroundTint="@color/primary_black_grey"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/button_study"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:elevation="4dp"/>
+
+    <Button
+        android:id="@+id/button_entertainment"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:textSize="10sp"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/ic_back"
+        android:backgroundTint="@color/primary_orange_200"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginEnd="20dp"
+        android:text="@string/button_entertainment"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        android:elevation="4dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/button_study"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

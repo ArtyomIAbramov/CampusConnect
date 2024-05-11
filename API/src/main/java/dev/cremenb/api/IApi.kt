@@ -36,6 +36,6 @@ interface IUniversity{
 }
 
 interface IEvents{
-    @GET("events/")
+    @GET("events")
     suspend fun getEvents() : Response<List<Event>>
 }
