@@ -9,4 +9,5 @@
     <string name="button_study">Учёба</string>
     <string name="button_entertainment">Досуг</string>
     <string name="event_take_part_button">Участвую!</string>
+    <string name="button_all">Все</string>
 </resources>

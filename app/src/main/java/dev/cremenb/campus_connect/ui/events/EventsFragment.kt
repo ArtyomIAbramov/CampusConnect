@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentEventsBinding
 import dev.cremenb.data.models.RequestResult
+import dev.cremenb.utilities.EdgeItemDecoration
 import dev.cremenb.utilities.VerticalSpaceItemDecoration
 
 @AndroidEntryPoint
@@ -50,16 +52,14 @@ class EventsFragment : Fragment() {
         setButtonsClickListener()
 
         eventRecyclerView = binding.recyclerView
-        val spaceDecoration = VerticalSpaceItemDecoration(10, 10)
-        eventRecyclerView.addItemDecoration(spaceDecoration)
+        eventRecyclerView.addItemDecoration(EdgeItemDecoration(10))
         eventRecyclerView.layoutManager = GridLayoutManager(activity, 2)
 
         viewModel.eventsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
                     viewModel.allEvents = result.data
-                    eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!)
-                    eventRecyclerView.adapter = eventAdapter
+                    setAdapter()
                 }
                 is RequestResult.Error -> {
                     // Обработка ошибки
@@ -76,24 +76,41 @@ class EventsFragment : Fragment() {
         return root
     }
 
+    private fun setAdapter()
+    {
+        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!)
+        eventRecyclerView.adapter = eventAdapter
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { eventAdapter.filter(it) }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { eventAdapter.filter(it) }
+                return false
+            }
+        })
+    }
+
+
     private fun setButtonsClickListener()
     {
+        binding.buttonAll.setOnClickListener {
+            eventAdapter.updateData(4)
+        }
+
         binding.buttonSport.setOnClickListener {
-            val filteredEvents = viewModel.allEvents?.filter { it.status?.id == 3 }
-            eventAdapter = EventCatalogAdapter(requireActivity(), filteredEvents!!)
-            eventRecyclerView.adapter = eventAdapter
+            eventAdapter.updateData(3)
         }
 
         binding.buttonStudy.setOnClickListener {
-            val filteredEvents = viewModel.allEvents?.filter { it.status?.id == 1 }
-            eventAdapter = EventCatalogAdapter(requireActivity(), filteredEvents!!)
-            eventRecyclerView.adapter = eventAdapter
+            eventAdapter.updateData(1)
         }
 
         binding.buttonEntertainment.setOnClickListener {
-            val filteredEvents = viewModel.allEvents?.filter { it.status?.id == 2 }
-            eventAdapter = EventCatalogAdapter(requireActivity(), filteredEvents!!)
-            eventRecyclerView.adapter = eventAdapter
+            eventAdapter.updateData(2)
         }
     }
 }
