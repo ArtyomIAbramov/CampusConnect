@@ -5,4 +5,6 @@
     <string name="title_events">Мероприятия</string>
     <string name="title_nothing">NOTHING</string>
     <string name="title_profile">Профиль</string>
+    <string name="login_button">Вход</string>
+    <string name="register_button">Регистрация</string>
 </resources>

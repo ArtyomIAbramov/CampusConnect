@@ -2,6 +2,8 @@ package dev.cremenb.campus_connect.ui.login
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentLoginBinding
 import dev.cremenb.data.models.RequestResult
+import java.util.Timer
+import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -47,12 +51,14 @@ class LoginFragment : Fragment() {
 
     private fun setButtonsClickListener()
     {
-        binding.button2.setOnClickListener {
-            viewModel.login("Arteasdzm63sdf435627", "Artem")
-
+        binding.loginButton.setOnClickListener {
+            //viewModel.login("Arteasdzm63sdf435627", "Artem")
+            val login = binding.loginInput.text.toString()
+            val password = binding.passwordInput.text.toString()
+            viewModel.login(login, password)
         }
 
-        binding.button3.setOnClickListener {
+        binding.registerButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_login_to_navigation_registration)
         }
     }
@@ -62,20 +68,40 @@ class LoginFragment : Fragment() {
         viewModel.loginResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
-                    binding.defaultLayout.visibility=View.GONE
+                    binding.defaultLoginLayout.visibility=View.GONE
                     binding.progressAnimation.visibility = View.GONE
                     binding.progressAnimation.cancelAnimation()
 
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
                 }
                 is RequestResult.Error -> {
-                    binding.defaultLayout.visibility=View.VISIBLE
+                    binding.defaultLoginLayout.visibility=View.VISIBLE
+
+                    binding.loginError.visibility = View.VISIBLE
+                    binding.loginError.text = "Проверьте логин"
+
+                    binding.passwordError.visibility = View.VISIBLE
+                    binding.passwordError.text = "Проверьте пароль"
+
+                    binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
+                    binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
+
+                    Timer().schedule(3000) {
+                        activity?.runOnUiThread {
+                            binding.loginError.visibility = View.GONE
+                            binding.passwordError.visibility = View.GONE
+
+                            binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background)
+                            binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background)
+                        }
+                    }
+
                     binding.progressAnimation.visibility = View.GONE
                     binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.Exception -> {
-                    binding.defaultLayout.visibility=View.VISIBLE
+                    binding.defaultLoginLayout.visibility=View.VISIBLE
                     binding.progressAnimation.visibility = View.GONE
                     binding.progressAnimation.cancelAnimation()
                 }
@@ -87,7 +113,7 @@ class LoginFragment : Fragment() {
         viewModel.authenticationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
-                    binding.defaultLayout.visibility=View.GONE
+                    binding.defaultLoginLayout.visibility=View.GONE
                     binding.progressAnimation.visibility = View.VISIBLE
                     binding.progressAnimation.playAnimation()
                     binding.progressAnimation.repeatCount = LottieDrawable.INFINITE
@@ -95,19 +121,19 @@ class LoginFragment : Fragment() {
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
                 }
                 is RequestResult.Error -> {
-                    binding.defaultLayout.visibility=View.VISIBLE
+                    binding.defaultLoginLayout.visibility=View.VISIBLE
                     binding.progressAnimation.visibility=View.GONE
                     binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.Exception -> {
-                    binding.defaultLayout.visibility=View.VISIBLE
+                    binding.defaultLoginLayout.visibility=View.VISIBLE
                     binding.progressAnimation.visibility=View.GONE
                     binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.InProgress -> {
-                    binding.defaultLayout.visibility=View.GONE
+                    binding.defaultLoginLayout.visibility=View.GONE
                     binding.progressAnimation.visibility=View.VISIBLE
                     binding.progressAnimation.playAnimation()
                     binding.progressAnimation.repeatCount = LottieDrawable.INFINITE

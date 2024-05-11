@@ -47,16 +47,24 @@ class RegistrationFragment : Fragment() {
 
     private fun setButtonsClickListener()
     {
-        binding.button3.setOnClickListener {
-            //TODO("сделать дизайн и получать данные из диза")
-            viewModel.register("Artem2","Artem","Arteasdzm63sddddf435627",2 ,"Artem",1)
+        binding.registrationButton.setOnClickListener {
+            val name = binding.registrationNameInput.text.toString()
+            val surname = binding.registrationSurnameInput.text.toString()
+            val login = binding.registrationLoginInput.text.toString()
+            val gender = if (binding.maleRadioButton.isChecked) 1 else 2
+            val password = binding.registrationPasswordInput.text.toString()
+            // Код для получения университета из элемента интерфейса
+            viewModel.register(name, surname, login, gender, password, 1)
         }
     }
+
     private fun observeRegistrationResult()
     {
         viewModel.registrationResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
+                    binding.defaultRegisterLayout.visibility=View.GONE
+                    binding.registrationButton.text = result.data.toString()
                     findNavController().navigate(R.id.action_navigation_registration_to_navigation_home)
                 }
                 is RequestResult.Error -> {
@@ -75,7 +83,7 @@ class RegistrationFragment : Fragment() {
         viewModel.universitiesResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
-                    binding.button3.text = result.data.toString()
+
                 }
                 is RequestResult.Error -> {
                     // Обработка ошибки
