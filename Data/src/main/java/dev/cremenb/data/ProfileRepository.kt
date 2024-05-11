@@ -15,11 +15,12 @@ class ProfileRepository @Inject constructor(
 
     suspend fun getProfile() : RequestResult<Profile> {
 
-        val remote = handleApi { api.getProfile() }
+        //val login = db.profileDao().getProfile()!!.login
+        val remote = handleApi { api.getProfileBylogin( "Klass")}//login!!) }
 
-        return when (val response = remote) {
+        return when (remote) {
             is RequestResult.Success -> {
-                remote
+                RequestResult.Success(remote.data)
             }
 
             is RequestResult.Error, is RequestResult.Exception-> {

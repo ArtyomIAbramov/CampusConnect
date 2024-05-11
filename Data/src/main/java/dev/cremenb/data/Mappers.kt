@@ -12,7 +12,7 @@ fun Profile.toProfileDbo() : ProfileDbo{
         this.phone,
         this.email,
         this.token,
-        this.avatar,
+        this.profileImageUrl,
         this.card,
     )
 }
@@ -27,6 +27,8 @@ fun ProfileDbo.toProfile(): Profile {
         this.phone,
         this.email,
         this.token,
+        null,
+        null,
         null,
         this.avatar,
         this.card,
