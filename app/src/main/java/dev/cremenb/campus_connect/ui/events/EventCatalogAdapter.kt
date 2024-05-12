@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dev.cremenb.api.models.Event
@@ -33,7 +34,6 @@ class EventCatalogAdapter(
         holder.titleTextView.text = data.name
         holder.timeTextView.text = DateFormatter.formatDDMMHHmm(data.date!!)
         holder.placeTextView.text = data.place?.name
-        holder.titleTextView.text = data.name
 
         Picasso.get()
             .load(data.thumbnail)
@@ -43,7 +43,7 @@ class EventCatalogAdapter(
         {
             holder.takePartButton.isEnabled = false
             holder.takePartButton.text = "Ждём вас!"
-            holder.takePartButton.setBackgroundTintList(ColorStateList.valueOf(R.color.green))
+            holder.takePartButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)))
         }
 
         holder.takePartButton.setOnClickListener {

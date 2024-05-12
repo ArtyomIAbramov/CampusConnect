@@ -24,4 +24,6 @@
     <string name="create_event_date_button_picker_start">Начало</string>
     <string name="create_event_date_button_picker_end">Конец</string>
     <string name="create_booking_button">Забронировать</string>
+    <string name="welcome_text">С возвращением!</string>
+    <string name="event_profile_title_text">Ваши события</string>
 </resources>
