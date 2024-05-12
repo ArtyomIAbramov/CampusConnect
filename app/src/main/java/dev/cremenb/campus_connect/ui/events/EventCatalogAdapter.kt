@@ -1,6 +1,7 @@
 package dev.cremenb.campus_connect.ui.events
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,11 @@ import dev.cremenb.api.models.Event
 import dev.cremenb.campus_connect.R
 import dev.cremenb.utilities.DateFormatter
 
-class EventCatalogAdapter(private val context: Context, private var dataList: List<Event>) : RecyclerView.Adapter<EventCatalogAdapter.ViewHolder>() {
+class EventCatalogAdapter(
+    private val context: Context,
+    private var dataList: List<Event>,
+    private val takePartFunction: ((String) -> Unit)?
+) : RecyclerView.Adapter<EventCatalogAdapter.ViewHolder>() {
 
     private var filteredList = dataList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,8 +39,17 @@ class EventCatalogAdapter(private val context: Context, private var dataList: Li
             .load(data.thumbnail)
             .into(holder.imageView)
 
-        holder.takePartButton.setOnClickListener {
+        if(takePartFunction == null)
+        {
+            holder.takePartButton.isEnabled = false
+            holder.takePartButton.text = "Ждём вас!"
+            holder.takePartButton.setBackgroundTintList(ColorStateList.valueOf(R.color.green))
+        }
 
+        holder.takePartButton.setOnClickListener {
+            takePartFunction!!(data.id!!)
+            holder.takePartButton.isEnabled = false
+            holder.takePartButton.text = "Успех!"
         }
     }
 

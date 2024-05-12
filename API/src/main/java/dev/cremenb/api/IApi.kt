@@ -40,6 +40,9 @@ interface IUniversity{
 interface IEvents{
     @GET("events")
     suspend fun getEvents() : Response<List<Event>>
+
+    @POST("eventparticipants?")
+    suspend fun takePart(@Header("Authorization") token: String, @Query("eventId") eventId: String) : Response<Void>
 }
 
 interface ICreateEventAndCoworking{

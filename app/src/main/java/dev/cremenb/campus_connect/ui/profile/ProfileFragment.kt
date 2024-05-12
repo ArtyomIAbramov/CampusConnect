@@ -9,16 +9,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
-import EventAdapter
+import dev.cremenb.campus_connect.ui.events.EventCatalogAdapter
 import dev.cremenb.data.models.RequestResult
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
 
     private lateinit var eventRecyclerView: RecyclerView
-    private lateinit var eventAdapter: EventAdapter
+    private lateinit var eventAdapter: EventCatalogAdapter
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -37,9 +36,14 @@ class ProfileFragment : Fragment() {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        eventRecyclerView = binding.eventRecyclerView
+        eventRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
         viewModel.profileResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
+                    viewModel.profie = result.data
+                    setAdapter()
                 }
 
                 is RequestResult.Error -> {
@@ -52,13 +56,13 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        eventRecyclerView = root.findViewById(R.id.event_recycler_view)
-        eventRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-
-        eventAdapter = EventAdapter(requireActivity(), viewModel.getEvents())
-        eventRecyclerView.adapter = eventAdapter
-
         return root
+    }
+
+    private fun setAdapter()
+    {
+        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.profie!!.events!!, null)
+        eventRecyclerView.adapter = eventAdapter
     }
 
     override fun onDestroyView() {

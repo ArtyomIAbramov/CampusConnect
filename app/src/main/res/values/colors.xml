@@ -15,5 +15,6 @@
     <color name="search_background_grey">#ededed</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#0f48a3</color>
+    <color name="green">#1cd44d</color>
 
 </resources>

@@ -73,12 +73,13 @@ class EventsFragment : Fragment() {
                 // Другие возможные состояния
             }
         }
+
         return root
     }
 
     private fun setAdapter()
     {
-        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!)
+        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!, viewModel::takePart)
         eventRecyclerView.adapter = eventAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
