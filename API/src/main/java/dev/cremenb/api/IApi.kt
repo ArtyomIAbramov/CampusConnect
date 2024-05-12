@@ -1,5 +1,6 @@
 package dev.cremenb.api
 
+import dev.cremenb.api.models.Booking
 import dev.cremenb.api.models.Event
 import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Profile
@@ -38,4 +39,12 @@ interface IUniversity{
 interface IEvents{
     @GET("events")
     suspend fun getEvents() : Response<List<Event>>
+}
+
+interface ICreateEventAndCoworking{
+    @GET("events")
+    suspend fun getAvailableEvents() : Response<List<Event>>
+
+    @GET("events")
+    suspend fun getCoworking() : Response<List<Booking>>
 }

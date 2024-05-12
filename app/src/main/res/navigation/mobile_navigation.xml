@@ -45,10 +45,10 @@
         tools:layout="@layout/fragment_events" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="dev.cremenb.campus_connect.ui.notifications.NotificationsFragment"
-        android:label="@string/title_nothing"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_create"
+        android:name="dev.cremenb.campus_connect.ui.createEventAndCoworking.CreateEventAndCoworkingFragment"
+        android:label="@string/title_create"
+        tools:layout="@layout/fragment_create_event_and_coworking" />
 
     <fragment
         android:id="@+id/navigation_profile"

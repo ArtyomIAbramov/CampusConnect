@@ -15,8 +15,8 @@ class ProfileRepository @Inject constructor(
 
     suspend fun getProfile() : RequestResult<Profile> {
 
-        //val login = db.profileDao().getProfile()!!.login
-        val remote = handleApi { api.getProfileBylogin( "Klass")}//login!!) }
+        val login = db.profileDao().getProfile()!!.login
+        val remote = handleApi { api.getProfileBylogin(login!!)}
 
         return when (remote) {
             is RequestResult.Success -> {

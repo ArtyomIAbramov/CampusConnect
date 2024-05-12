@@ -3,7 +3,7 @@
     <string name="title_home">Главная</string>
     <string name="title_card">Карта</string>
     <string name="title_events">Мероприятия</string>
-    <string name="title_nothing">NOTHING</string>
+    <string name="title_create">Создать</string>
     <string name="title_profile">Профиль</string>
     <string name="button_sport">Спорт</string>
     <string name="button_study">Учёба</string>
@@ -12,4 +12,13 @@
     <string name="button_all">Все</string>
     <string name="login_button">Вход</string>
     <string name="register_button">Регистрация</string>
+    <string name="createEventOrCowork_button">Создай!</string>
+    <string name="create_type_text">Выбери тип занятия</string>
+    <string name="create_event">Мероприятие</string>
+    <string name="create_coworking">Коворкинг</string>
+    <string name="create_event_type">Выберите тип мероприятия</string>
+    <string name="create_event_name">Введите название мероприятия</string>
+    <string name="create_event_description">Введите описания мероприятия</string>
+    <string name="create_event_date">Выберите дату и время</string>
+    <string name="create_event_date_button_picker">Выбрать</string>
 </resources>

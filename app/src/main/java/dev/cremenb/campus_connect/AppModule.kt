@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.cremenb.api.IAuthorization
+import dev.cremenb.api.ICreateEventAndCoworking
 import dev.cremenb.api.IEvents
 import dev.cremenb.api.IProfile
 import dev.cremenb.api.IRegistration
@@ -78,5 +79,12 @@ object AppModule {
     fun provideEventsApi(retrofit: Retrofit) : IEvents
     {
         return retrofit.create(IEvents::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCreateEventAndCoworkingApi(retrofit: Retrofit) : ICreateEventAndCoworking
+    {
+        return retrofit.create(ICreateEventAndCoworking::class.java)
     }
 }
