@@ -139,10 +139,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/progress_animation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:lottie_fileName="progress_animation.json" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -63,8 +63,6 @@ class LoginFragment : Fragment() {
             when (result) {
                 is RequestResult.Success -> {
                     binding.defaultLoginLayout.visibility=View.GONE
-                    binding.progressAnimation.visibility = View.GONE
-                    binding.progressAnimation.cancelAnimation()
 
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
                 }
@@ -79,15 +77,10 @@ class LoginFragment : Fragment() {
 
                     binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
                     binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
-
-                    binding.progressAnimation.visibility = View.GONE
-                    binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.Exception -> {
                     binding.defaultLoginLayout.visibility=View.VISIBLE
-                    binding.progressAnimation.visibility = View.GONE
-                    binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.InProgress -> {}
@@ -98,29 +91,19 @@ class LoginFragment : Fragment() {
             when (result) {
                 is RequestResult.Success -> {
                     binding.defaultLoginLayout.visibility=View.GONE
-                    binding.progressAnimation.visibility = View.VISIBLE
-                    binding.progressAnimation.playAnimation()
-                    binding.progressAnimation.repeatCount = LottieDrawable.INFINITE
 
                     findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
                 }
                 is RequestResult.Error -> {
                     binding.defaultLoginLayout.visibility=View.VISIBLE
-                    binding.progressAnimation.visibility=View.GONE
-                    binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.Exception -> {
                     binding.defaultLoginLayout.visibility=View.VISIBLE
-                    binding.progressAnimation.visibility=View.GONE
-                    binding.progressAnimation.cancelAnimation()
                 }
 
                 is RequestResult.InProgress -> {
                     binding.defaultLoginLayout.visibility=View.GONE
-                    binding.progressAnimation.visibility=View.VISIBLE
-                    binding.progressAnimation.playAnimation()
-                    binding.progressAnimation.repeatCount = LottieDrawable.INFINITE
                 }
             }
         }
