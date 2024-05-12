@@ -1,7 +1,7 @@
 package dev.cremenb.data
 
 import dev.cremenb.api.ICreateEventAndCoworking
-import dev.cremenb.api.models.Event
+import dev.cremenb.api.models.Place
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
 import dev.cremenb.database.DataBase
@@ -13,9 +13,9 @@ class CreateEventAndCoworkingRepository  @Inject constructor(
 )
 {
 
-    suspend fun getAvailableEvents() : RequestResult<List<Event>> {
+    suspend fun getAvailablePlaces() : RequestResult<List<Place>> {
 
-        val response = handleApi { api.getAvailableEvents()}
+        val response = handleApi { api.getAvailablePlaces()}
 
         return when (response) {
             is RequestResult.Success -> {

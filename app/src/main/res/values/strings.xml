@@ -19,6 +19,9 @@
     <string name="create_event_type">Выберите тип мероприятия</string>
     <string name="create_event_name">Введите название мероприятия</string>
     <string name="create_event_description">Введите описания мероприятия</string>
-    <string name="create_event_date">Выберите дату и время</string>
+    <string name="create_event_date">Выберите дату</string>
     <string name="create_event_date_button_picker">Выбрать</string>
+    <string name="create_event_date_button_picker_start">Начало</string>
+    <string name="create_event_date_button_picker_end">Конец</string>
+    <string name="create_booking_button">Забронировать</string>
 </resources>
