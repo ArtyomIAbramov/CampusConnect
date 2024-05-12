@@ -11,8 +11,7 @@
     <color name="primary_purple_100">#6D44FF</color>
     <color name="primary_yellow_200">#FBD14B</color>
     <color name="black">#FF000000</color>
-    <color name="red_color">#FF0000</color>
-    
+    <color name="red">#FF0000</color>
     <color name="search_background_grey">#ededed</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_blue">#0f48a3</color>

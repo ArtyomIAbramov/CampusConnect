@@ -2,8 +2,6 @@ package dev.cremenb.campus_connect.ui.login
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentLoginBinding
 import dev.cremenb.data.models.RequestResult
-import java.util.Timer
-import kotlin.concurrent.schedule
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -51,7 +47,6 @@ class LoginFragment : Fragment() {
     private fun setButtonsClickListener()
     {
         binding.loginButton.setOnClickListener {
-            //viewModel.login("Arteasdzm63sdf435627", "Artem")
             val login = binding.loginInput.text.toString()
             val password = binding.passwordInput.text.toString()
             viewModel.login(login, password)
@@ -84,16 +79,6 @@ class LoginFragment : Fragment() {
 
                     binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
                     binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
-
-                    Timer().schedule(3000) {
-                        activity?.runOnUiThread {
-                            binding.loginError.visibility = View.GONE
-                            binding.passwordError.visibility = View.GONE
-
-                            binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background)
-                            binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background)
-                        }
-                    }
 
                     binding.progressAnimation.visibility = View.GONE
                     binding.progressAnimation.cancelAnimation()

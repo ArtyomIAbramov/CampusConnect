@@ -64,7 +64,6 @@ class RegistrationFragment : Fragment() {
             when (result) {
                 is RequestResult.Success -> {
                     binding.defaultRegisterLayout.visibility=View.GONE
-                    binding.registrationButton.text = result.data.toString()
                     findNavController().navigate(R.id.action_navigation_registration_to_navigation_home)
                 }
                 is RequestResult.Error -> {

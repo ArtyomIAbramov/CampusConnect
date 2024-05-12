@@ -57,10 +57,7 @@
             android:background="@drawable/rounded_edittext_background"
             android:drawableEnd="@drawable/ic_register_icon"
             android:hint="Имя"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/register_background_image" />
@@ -75,10 +72,7 @@
             android:background="@drawable/rounded_edittext_background"
             android:drawableEnd="@drawable/ic_register_icon"
             android:hint="Фамилия"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration_name_input" />
@@ -93,10 +87,7 @@
             android:background="@drawable/rounded_edittext_background"
             android:drawableEnd="@drawable/ic_login_email"
             android:hint="Логин"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration_surname_input" />
@@ -112,10 +103,7 @@
             android:drawableEnd="@drawable/ic_login_padlock"
             android:hint="Пароль"
             android:inputType="textPassword"
-            android:paddingStart="8dp"
-            android:paddingTop="8dp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
+            android:padding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration_login_input" />
@@ -128,6 +116,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="32dp"
             android:orientation="horizontal"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/registration_password_input">
@@ -144,6 +133,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:text="Женский" />
+
         </RadioGroup>
 
         <Button
