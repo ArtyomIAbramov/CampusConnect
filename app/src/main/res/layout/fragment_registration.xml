@@ -132,13 +132,17 @@
 
         <Spinner
             android:id="@+id/spinner_universities"
+            android:layout_height="40dp"
             android:layout_width="match_parent"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_marginTop="16dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/gender_radio_group"
-            android:layout_centerInParent="true" />
+            android:dropDownVerticalOffset="40dp"
+            android:padding="8dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/spinner_background"
+            android:popupBackground="@drawable/spinner_popup_background"
+            app:layout_constraintTop_toBottomOf="@+id/gender_radio_group"/>
 
         <Button
             android:id="@+id/registration_button"
