@@ -82,7 +82,7 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
     private fun setButtonsClickListener()
     {
-        binding.buttonCoworking.setOnClickListener {
+        binding.buttonEvent.setOnClickListener {
             binding.textEventType.visibility = View.VISIBLE
             binding.eventTypeScroll.visibility = View.VISIBLE
         }
