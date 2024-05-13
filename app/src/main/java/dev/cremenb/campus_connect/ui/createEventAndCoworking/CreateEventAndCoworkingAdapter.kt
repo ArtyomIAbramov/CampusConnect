@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import dev.cremenb.api.models.Place
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import dev.cremenb.api.models.PlaceAndSlot
 import dev.cremenb.campus_connect.R
 
-class CreateEventAndCoworkingAdapter(private val context: Context, private var dataList: List<Place>) : RecyclerView.Adapter<CreateEventAndCoworkingAdapter.ViewHolder>() {
+class CreateEventAndCoworkingAdapter(private val context: Context, private var dataList: List<PlaceAndSlot>) : RecyclerView.Adapter<CreateEventAndCoworkingAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
@@ -21,12 +22,24 @@ class CreateEventAndCoworkingAdapter(private val context: Context, private var d
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
-        holder.textViewName.text = data.name
-        holder.textViewAddress.text = data.address
-        holder.textViewCapacity.text = data.capacity.toString()
+        holder.textViewName.text = data.place.name
+        holder.textViewAddress.text = data.place.address
+        holder.textViewCapacity.text = data.place.capacity.toString()
 
         holder.buttonTakePart.setOnClickListener {
+            // Создаем BottomSheetDialog
+            val dialog = BottomSheetDialog(holder.itemView.context)
+            // Инфлейтим разметку для BottomSheetDialog
+            //val bottomSheetView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_place, null)
+            // Здесь вы можете инициализировать элементы вашей разметки и загрузить данные
+            // Например:
+            // val textViewData = bottomSheetView.findViewById<TextView>(R.id.textViewData)
+            // textViewData.text = "Загруженные данные"
 
+            // Устанавливаем разметку для BottomSheetDialog
+            //dialog.setContentView(bottomSheetView)
+            // Показываем BottomSheetDialog
+            dialog.show()
         }
     }
 

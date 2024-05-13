@@ -43,4 +43,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.jakarta.inject)
     implementation(libs.play.services.basement)
+    implementation(project(":utilities"))
 }

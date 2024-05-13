@@ -6,6 +6,7 @@ import dev.cremenb.api.models.CommentData
 import dev.cremenb.api.models.Event
 import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Place
+import dev.cremenb.api.models.PlaceAndSlot
 import dev.cremenb.api.models.Profile
 import dev.cremenb.api.models.Register
 import dev.cremenb.api.models.University
@@ -15,6 +16,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
+import java.util.Date
 
 interface IProfile{
     @GET("Users/getbylogin")
@@ -48,8 +50,8 @@ interface IEvents{
 }
 
 interface ICreateEventAndCoworking{
-    @GET("events")
-    suspend fun getAvailablePlaces() : Response<List<Place>>
+    @POST("place")
+    suspend fun getAvailableSlotsAndPlaces(@Body data : String) : Response<List<PlaceAndSlot>>
 }
 
 interface IEventComments{

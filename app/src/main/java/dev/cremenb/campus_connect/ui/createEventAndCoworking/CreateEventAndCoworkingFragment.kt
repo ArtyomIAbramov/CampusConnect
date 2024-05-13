@@ -1,7 +1,6 @@
 package dev.cremenb.campus_connect.ui.createEventAndCoworking
 
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import android.text.Editable
@@ -52,10 +51,10 @@ class CreateEventAndCoworkingFragment : Fragment() {
         placeRecyclerView.addItemDecoration(EdgeItemDecoration(10))
         placeRecyclerView.layoutManager = GridLayoutManager(activity, 2)
 
-        viewModel.placesResult.observe(viewLifecycleOwner) { result ->
+        viewModel.placesAndSlotsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
-                    viewModel.allPlaces = result.data
+                    viewModel.allPlacesAndSlots = result.data
                     setAdapter()
                 }
                 is RequestResult.Error -> {
@@ -76,7 +75,7 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
     private fun setAdapter()
     {
-        placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlaces!!)
+        placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlacesAndSlots!!)
         placeRecyclerView.adapter = placeAdapter
     }
 
@@ -141,7 +140,9 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 binding.eventDate.hint = "$dayOfMonth/${monthOfYear + 1}/$year"
-                viewModel.getPlaces()
+                val date = calendar.time
+                viewModel.getPlacesAndSlots(date)
+
             }, year, month, day)
 
             dpd.show()
