@@ -1,6 +1,8 @@
 package dev.cremenb.api
 
 import dev.cremenb.api.models.Booking
+import dev.cremenb.api.models.Comment
+import dev.cremenb.api.models.CommentData
 import dev.cremenb.api.models.Event
 import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Place
@@ -48,5 +50,12 @@ interface IEvents{
 interface ICreateEventAndCoworking{
     @GET("events")
     suspend fun getAvailablePlaces() : Response<List<Place>>
+}
 
+interface IEventComments{
+    @POST("eventcomments")
+    suspend fun postComment(@Header("Authorization") token: String, @Body commentData : CommentData) : Response<List<Comment>>
+
+    @GET("eventcomments?")
+    suspend fun getComment(@Query("eventId") eventId: String) : Response<List<Comment>>
 }

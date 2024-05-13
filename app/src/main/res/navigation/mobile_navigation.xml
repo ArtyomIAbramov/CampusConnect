@@ -42,7 +42,11 @@
         android:id="@+id/navigation_events"
         android:name="dev.cremenb.campus_connect.ui.events.EventsFragment"
         android:label="@string/title_events"
-        tools:layout="@layout/fragment_events" />
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_navigation_events_to_navigation_event_comment"
+            app:destination="@id/navigation_event_comment" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_create"
@@ -55,5 +59,14 @@
         android:name="dev.cremenb.campus_connect.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_event_comment"
+        android:name="dev.cremenb.campus_connect.ui.eventComment.EventCommentFragment"
+        tools:layout="@layout/fragment_event_comment" >
+        <action
+            android:id="@+id/action_navigation_event_comment_to_navigation_events"
+            app:destination="@id/navigation_events" />
+    </fragment>
 
 </navigation>

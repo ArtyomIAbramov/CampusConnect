@@ -24,6 +24,15 @@
             tools:src="@color/primary_red_100"
             app:shapeAppearanceOverlay="@style/RoundedCorners" />
 
+        <ImageView
+            android:id="@+id/commentView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_comment" />
+
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="0dp"

@@ -79,7 +79,7 @@ class EventsFragment : Fragment() {
 
     private fun setAdapter()
     {
-        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!, viewModel::takePart)
+        eventAdapter = EventCatalogAdapter(requireActivity(), viewModel.allEvents!!, viewModel::takePart, findNavController())
         eventRecyclerView.adapter = eventAdapter
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

@@ -1,9 +1,7 @@
 package dev.cremenb.campus_connect
 
-import androidx.navigation.fragment.NavHostFragment
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.WindowManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat

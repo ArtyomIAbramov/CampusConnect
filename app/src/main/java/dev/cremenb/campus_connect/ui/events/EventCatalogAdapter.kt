@@ -2,6 +2,7 @@ package dev.cremenb.campus_connect.ui.events
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dev.cremenb.api.models.Event
@@ -18,7 +20,8 @@ import dev.cremenb.utilities.DateFormatter
 class EventCatalogAdapter(
     private val context: Context,
     private var dataList: List<Event>,
-    private val takePartFunction: ((String) -> Unit)?
+    private val takePartFunction: ((String) -> Unit)?,
+    private val navController: NavController,
 ) : RecyclerView.Adapter<EventCatalogAdapter.ViewHolder>() {
 
     private var filteredList = dataList
@@ -38,6 +41,13 @@ class EventCatalogAdapter(
         Picasso.get()
             .load(data.thumbnail)
             .into(holder.imageView)
+
+        holder.commentView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("eventId", data.id)
+            bundle.putString("eventName", data.name)
+            navController.navigate(R.id.action_navigation_events_to_navigation_event_comment, bundle)
+        }
 
         if(data.isParticipant == true)
         {
@@ -85,10 +95,10 @@ class EventCatalogAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val commentView: ImageView = itemView.findViewById(R.id.commentView)
         val titleTextView: TextView = itemView.findViewById(R.id.textViewTitle)
         val timeTextView: TextView = itemView.findViewById(R.id.textViewTime)
         val placeTextView: TextView = itemView.findViewById(R.id.textViewPlace)
         val takePartButton: Button = itemView.findViewById(R.id.buttonTakePart)
-
     }
 }
