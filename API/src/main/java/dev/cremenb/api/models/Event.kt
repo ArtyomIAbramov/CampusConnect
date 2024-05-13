@@ -11,4 +11,5 @@ data class Event (
     val place: Place?,
     val status : EventStatus?,
     val users : List<Profile>?,
+    val isParticipant : Boolean?,
 )

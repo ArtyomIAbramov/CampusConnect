@@ -39,17 +39,24 @@ class EventCatalogAdapter(
             .load(data.thumbnail)
             .into(holder.imageView)
 
-        if(takePartFunction == null)
+        if(data.isParticipant == true)
         {
             holder.takePartButton.isEnabled = false
-            holder.takePartButton.text = "Ждём вас!"
-            holder.takePartButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)))
+            holder.takePartButton.text = "Участвуете!"
         }
 
         holder.takePartButton.setOnClickListener {
             takePartFunction!!(data.id!!)
             holder.takePartButton.isEnabled = false
             holder.takePartButton.text = "Успех!"
+        }
+
+
+        if(takePartFunction == null)
+        {
+            holder.takePartButton.isEnabled = false
+            holder.takePartButton.text = "Ждём вас!"
+            holder.takePartButton.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.green)))
         }
     }
 

@@ -14,7 +14,11 @@ class EventsRepository @Inject constructor(
 {
     suspend fun getAllEvents() : RequestResult<List<Event>> {
 
-        val response = handleApi { api.getEvents()}
+        val token = db
+            .profileDao()
+            .getToken()
+
+        val response = handleApi { api.getEvents("Bearer " + token)}
 
         return when (response) {
             is RequestResult.Success -> {
