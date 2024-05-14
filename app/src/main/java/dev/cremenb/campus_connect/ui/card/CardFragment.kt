@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.campus_connect.MainActivity
 import dev.cremenb.campus_connect.databinding.FragmentCardBinding
 
 @AndroidEntryPoint
@@ -31,7 +32,10 @@ class CardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCardBinding.inflate(inflater, container, false)
+
+        (activity as MainActivity).navView.visibility = View.VISIBLE
         val root: View = binding.root
+
         return root
     }
 }

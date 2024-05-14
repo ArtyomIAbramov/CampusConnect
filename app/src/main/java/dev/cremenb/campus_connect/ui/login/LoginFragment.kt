@@ -64,7 +64,7 @@ class LoginFragment : Fragment() {
                 is RequestResult.Success -> {
                     binding.defaultLoginLayout.visibility=View.GONE
 
-                    findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
+                    findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
                 }
                 is RequestResult.Error -> {
                     binding.defaultLoginLayout.visibility=View.VISIBLE
@@ -92,7 +92,7 @@ class LoginFragment : Fragment() {
                 is RequestResult.Success -> {
                     binding.defaultLoginLayout.visibility=View.GONE
 
-                    findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
+                    findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
                 }
                 is RequestResult.Error -> {
                     binding.defaultLoginLayout.visibility=View.VISIBLE
