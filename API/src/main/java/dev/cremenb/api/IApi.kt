@@ -3,7 +3,10 @@ package dev.cremenb.api
 import dev.cremenb.api.models.Booking
 import dev.cremenb.api.models.Comment
 import dev.cremenb.api.models.CommentData
+import dev.cremenb.api.models.CreateBooking
+import dev.cremenb.api.models.CreateEvent
 import dev.cremenb.api.models.Event
+import dev.cremenb.api.models.EventDate
 import dev.cremenb.api.models.Login
 import dev.cremenb.api.models.Place
 import dev.cremenb.api.models.PlaceAndSlot
@@ -50,8 +53,17 @@ interface IEvents{
 }
 
 interface ICreateEventAndCoworking{
-    @POST("place")
-    suspend fun getAvailableSlotsAndPlaces(@Body data : String) : Response<List<PlaceAndSlot>>
+    @POST("place/slots")
+    suspend fun getAvailableSlotsAndPlaces(@Body data : EventDate) : Response<List<PlaceAndSlot>>
+
+    @GET("place/events?")
+    suspend fun getEventsPlaces(@Query("date") date : EventDate) : Response<List<PlaceAndSlot>>
+
+    @POST("booking")
+    suspend fun createBooking(@Header("Authorization") token: String, @Body booking: CreateBooking) : Response<Void>
+
+    @POST("booking")
+    suspend fun createEvent(@Header("Authorization") token: String, @Body booking: CreateEvent) : Response<Void>
 }
 
 interface IEventComments{

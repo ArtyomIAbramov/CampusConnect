@@ -9,16 +9,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.api.models.BookingSlot
 import dev.cremenb.campus_connect.databinding.FragmentCreateEventAndCoworkingBinding
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.utilities.EdgeItemDecoration
 import java.util.Calendar
+import java.util.Date
+
+
+interface SlotSelectionListener {
+    fun slotSelected(eventId : Int, slot: BookingSlot)
+
+    fun eventPlaceSelected(eventId : Int)
+}
 
 @AndroidEntryPoint
-class CreateEventAndCoworkingFragment : Fragment() {
+class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
 
     companion object {
         fun newInstance() = CreateEventAndCoworkingFragment()
@@ -31,11 +41,29 @@ class CreateEventAndCoworkingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var placeRecyclerView: RecyclerView
+    private lateinit var eventPlaceRecyclerView: RecyclerView
     private lateinit var placeAdapter: CreateEventAndCoworkingAdapter
-    private lateinit var selectedTime: String
+
+    private lateinit var eventName : String
+    private lateinit var eventDescription : String
+    private lateinit var eventDate : Date
+    private var eventTypeId : Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun slotSelected(eventId : Int, slot: BookingSlot) {
+
+        viewModel.createCoworkong(eventId,slot.from,slot.to)
+    }
+
+    override fun eventPlaceSelected(eventId : Int) {
+
+        eventName = binding.eventName.text.toString()
+        eventDescription = binding.eventDescription.text.toString()
+
+        viewModel.createEvent(eventId,eventName, eventDescription,eventTypeId!! ,eventDate)
     }
 
     override fun onCreateView(
@@ -47,15 +75,76 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
         setButtonsClickListener()
 
-        placeRecyclerView = binding.recyclerView
+        placeRecyclerView = binding.coworkingRecyclerView
         placeRecyclerView.addItemDecoration(EdgeItemDecoration(10))
         placeRecyclerView.layoutManager = GridLayoutManager(activity, 2)
+
+        eventPlaceRecyclerView = binding.recyclerView
+        eventPlaceRecyclerView.addItemDecoration(EdgeItemDecoration(10))
+        eventPlaceRecyclerView.layoutManager = GridLayoutManager(activity, 2)
 
         viewModel.placesAndSlotsResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is RequestResult.Success -> {
                     viewModel.allPlacesAndSlots = result.data
-                    setAdapter()
+                    setAdapter(1)
+                }
+                is RequestResult.Error -> {
+                    // Обработка ошибки
+                }
+                is RequestResult.Exception -> {
+                    // Обработка исключения
+                }
+                is RequestResult.InProgress -> {
+                    // Обработка состояния в процессе
+                }
+                // Другие возможные состояния
+            }
+        }
+
+        viewModel.eventPlacesResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    viewModel.allEventPlaces = result.data
+                    setAdapter(2)
+                }
+                is RequestResult.Error -> {
+                    // Обработка ошибки
+                }
+                is RequestResult.Exception -> {
+                    // Обработка исключения
+                }
+                is RequestResult.InProgress -> {
+                    // Обработка состояния в процессе
+                }
+                // Другие возможные состояния
+            }
+        }
+
+        viewModel.createBookingResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    clearField()
+                    Toast.makeText(context, "Вы успешно забронировали!", Toast.LENGTH_SHORT).show()
+                }
+                is RequestResult.Error -> {
+                    // Обработка ошибки
+                }
+                is RequestResult.Exception -> {
+                    // Обработка исключения
+                }
+                is RequestResult.InProgress -> {
+                    // Обработка состояния в процессе
+                }
+                // Другие возможные состояния
+            }
+        }
+
+        viewModel.createEventResult.observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is RequestResult.Success -> {
+                    clearField()
+                    Toast.makeText(context, "Мероприятие создано!", Toast.LENGTH_SHORT).show()
                 }
                 is RequestResult.Error -> {
                     // Обработка ошибки
@@ -72,11 +161,54 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
         return root
     }
+    
+    private fun clearField(){
+        binding.textEventType.visibility = View.GONE
+        binding.eventTypeScroll.visibility = View.GONE
+        binding.textEventName.visibility = View.GONE
+        binding.eventName.visibility = View.GONE
+        binding.eventName.text.clear()
+        binding.textEventDescription.visibility = View.GONE
+        binding.eventDescription.visibility = View.GONE
+        binding.eventDescription.text.clear()
+        binding.textEventData.visibility = View.GONE
+        binding.buttonDatePicker.visibility = View.GONE
+        binding.eventDate.visibility = View.GONE
+        binding.eventDate.text.clear()
+        placeRecyclerView.visibility =View.GONE
+    }
 
-    private fun setAdapter()
+    private fun setAdapter(t : Int)
     {
-        placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlacesAndSlots!!)
-        placeRecyclerView.adapter = placeAdapter
+        if(t == 1)
+        {
+            placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlacesAndSlots!!, this ,1)
+            placeRecyclerView.adapter = placeAdapter
+            placeRecyclerView.visibility = View.VISIBLE
+
+            val location = IntArray(2)
+            placeRecyclerView.getLocationInWindow(location)
+            val scrollY = location[1] - binding.scrollView.top
+
+            binding.scrollView.post {
+                binding.scrollView.scrollTo(0, scrollY)
+            }
+        }
+        else
+        {
+            val
+            placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allEventPlaces!!, this, 2)
+            eventPlaceRecyclerView.adapter = placeAdapter
+            eventPlaceRecyclerView.visibility = View.VISIBLE
+
+            val location = IntArray(2)
+            eventPlaceRecyclerView.getLocationInWindow(location)
+            val scrollY = location[1] - binding.scrollView.top
+
+            binding.scrollView.post {
+                binding.scrollView.scrollTo(0, scrollY)
+            }
+        }
     }
 
     private fun setButtonsClickListener()
@@ -86,19 +218,28 @@ class CreateEventAndCoworkingFragment : Fragment() {
             binding.eventTypeScroll.visibility = View.VISIBLE
         }
 
+        binding.buttonCoworking.setOnClickListener {
+            binding.textCoworkingData.visibility = View.VISIBLE
+            binding.buttonDateCoworkingPicker.visibility = View.VISIBLE
+            binding.coworkingDate.visibility = View.VISIBLE
+        }
+
         binding.buttonEntertainment.setOnClickListener {
             binding.textEventName.visibility = View.VISIBLE
             binding.eventName.visibility = View.VISIBLE
+            eventTypeId = 2
         }
 
         binding.buttonStudy.setOnClickListener {
             binding.textEventName.visibility = View.VISIBLE
             binding.eventName.visibility = View.VISIBLE
+            eventTypeId = 1
         }
 
         binding.buttonSport.setOnClickListener {
             binding.textEventName.visibility = View.VISIBLE
             binding.eventName.visibility = View.VISIBLE
+            eventTypeId = 3
         }
 
         binding.eventName.addTextChangedListener(object : TextWatcher {
@@ -140,6 +281,25 @@ class CreateEventAndCoworkingFragment : Fragment() {
 
             val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
                 binding.eventDate.hint = "$dayOfMonth/${monthOfYear + 1}/$year"
+                calendar.set(year, monthOfYear, dayOfMonth)
+                val date = calendar.time
+                eventDate = date
+                viewModel.getEventsPlaces(date)
+
+            }, year, month, day)
+
+            dpd.show()
+        }
+
+        binding.buttonDateCoworkingPicker.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(requireContext(), { view, year, monthOfYear, dayOfMonth ->
+                binding.coworkingDate.hint = "$dayOfMonth/${monthOfYear + 1}/$year"
+                calendar.set(year, monthOfYear, dayOfMonth)
                 val date = calendar.time
                 viewModel.getPlacesAndSlots(date)
 

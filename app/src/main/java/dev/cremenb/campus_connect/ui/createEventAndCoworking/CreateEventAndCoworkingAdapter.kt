@@ -6,13 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dev.cremenb.api.models.BookingSlot
 import dev.cremenb.api.models.PlaceAndSlot
 import dev.cremenb.campus_connect.R
+import dev.cremenb.utilities.EdgeItemDecoration
 
-class CreateEventAndCoworkingAdapter(private val context: Context, private var dataList: List<PlaceAndSlot>) : RecyclerView.Adapter<CreateEventAndCoworkingAdapter.ViewHolder>() {
 
+class CreateEventAndCoworkingAdapter(
+    private val context: Context,
+    private var dataList: List<PlaceAndSlot>,
+    private val listener: SlotSelectionListener,
+    private val one_is_coworking_two_is_event : Int,
+) : RecyclerView.Adapter<CreateEventAndCoworkingAdapter.ViewHolder>()  {
+
+    var selectedTime : BookingSlot? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_place, parent, false)
@@ -23,23 +33,38 @@ class CreateEventAndCoworkingAdapter(private val context: Context, private var d
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = dataList[position]
         holder.textViewName.text = data.place.name
-        holder.textViewAddress.text = data.place.address
+        holder.textViewAddress.text = data.place.adress
         holder.textViewCapacity.text = data.place.capacity.toString()
 
-        holder.buttonTakePart.setOnClickListener {
-            // Создаем BottomSheetDialog
-            val dialog = BottomSheetDialog(holder.itemView.context)
-            // Инфлейтим разметку для BottomSheetDialog
-            //val bottomSheetView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_place, null)
-            // Здесь вы можете инициализировать элементы вашей разметки и загрузить данные
-            // Например:
-            // val textViewData = bottomSheetView.findViewById<TextView>(R.id.textViewData)
-            // textViewData.text = "Загруженные данные"
+        if(one_is_coworking_two_is_event == 1)
+        {
+            holder.buttonTakePart.setOnClickListener {
 
-            // Устанавливаем разметку для BottomSheetDialog
-            //dialog.setContentView(bottomSheetView)
-            // Показываем BottomSheetDialog
-            dialog.show()
+                val dialog = BottomSheetDialog(holder.itemView.context)
+                val bottomSheetView = LayoutInflater.from(holder.itemView.context).inflate(R.layout.item_slots, null)
+                val slotsRecyclerView = bottomSheetView.findViewById<RecyclerView>(R.id.slotsRecyclerView)
+
+                slotsRecyclerView.addItemDecoration(EdgeItemDecoration(10))
+                slotsRecyclerView.layoutManager = GridLayoutManager(context, 2)
+                val slotsAdapter = SlotsAdapter(context, dialog, data.bookingSlot)
+                slotsRecyclerView.adapter = slotsAdapter
+
+                val closeButton = bottomSheetView.findViewById<Button>(R.id.button_select)
+                closeButton.setOnClickListener {
+                    selectedTime = data.bookingSlot[slotsAdapter.selectedTimePosition!!]
+                    dialog.dismiss()
+                    listener.slotSelected(data.place.id!!,selectedTime!!)
+                }
+                dialog.setContentView(bottomSheetView)
+                dialog.show()
+            }
+        }
+        else
+        {
+            holder.buttonTakePart.text = "Создать"
+            holder.buttonTakePart.setOnClickListener {
+                listener.eventPlaceSelected(data.place.id!!)
+            }
         }
     }
 
