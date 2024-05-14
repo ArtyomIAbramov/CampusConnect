@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.cremenb.api.models.CreateBooking
 import dev.cremenb.api.models.CreateEvent
+import dev.cremenb.api.models.Place
 import dev.cremenb.api.models.PlaceAndSlot
 import dev.cremenb.data.CreateEventAndCoworkingRepository
 import dev.cremenb.data.models.RequestResult
@@ -26,9 +27,9 @@ class CreateEventAndCoworkingViewModel @Inject constructor (
 
     var allPlacesAndSlots: List<PlaceAndSlot>? = null
 
-    var eventPlacesResult = MutableLiveData<RequestResult<List<PlaceAndSlot>>>()
+    var eventPlacesResult = MutableLiveData<RequestResult<List<Place>>>()
 
-    var allEventPlaces: List<PlaceAndSlot>? = null
+    var allEventPlaces: List<Place>? = null
 
     var createBookingResult = MutableLiveData<RequestResult<Void>>()
 

@@ -4,6 +4,7 @@ import dev.cremenb.api.ICreateEventAndCoworking
 import dev.cremenb.api.models.CreateBooking
 import dev.cremenb.api.models.CreateEvent
 import dev.cremenb.api.models.EventDate
+import dev.cremenb.api.models.Place
 import dev.cremenb.api.models.PlaceAndSlot
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.data.models.handleApi
@@ -43,11 +44,11 @@ class CreateEventAndCoworkingRepository  @Inject constructor(
         }
     }
 
-    suspend fun getEventsPlaces(date : Date) : RequestResult<List<PlaceAndSlot>> {
+    suspend fun getEventsPlaces(date : Date) : RequestResult<List<Place>> {
 
         val dateIso = DateFormatter.formatDateToIsoString(date)
 
-        val response = handleApi { api.getEventsPlaces(EventDate(dateIso))}
+        val response = handleApi { api.getEventsPlaces(dateIso)}
 
         return when (response) {
             is RequestResult.Success -> {

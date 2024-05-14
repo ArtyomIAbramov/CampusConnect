@@ -176,13 +176,14 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
         binding.eventDate.visibility = View.GONE
         binding.eventDate.text.clear()
         placeRecyclerView.visibility =View.GONE
+        eventPlaceRecyclerView.visibility = View.GONE
     }
 
     private fun setAdapter(t : Int)
     {
         if(t == 1)
         {
-            placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlacesAndSlots!!, this ,1)
+            placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allPlacesAndSlots!!, null, this ,1)
             placeRecyclerView.adapter = placeAdapter
             placeRecyclerView.visibility = View.VISIBLE
 
@@ -196,8 +197,7 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
         }
         else
         {
-            val
-            placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), viewModel.allEventPlaces!!, this, 2)
+            val placeAdapter = CreateEventAndCoworkingAdapter(requireActivity(), null ,viewModel.allEventPlaces!!, this, 2)
             eventPlaceRecyclerView.adapter = placeAdapter
             eventPlaceRecyclerView.visibility = View.VISIBLE
 
@@ -206,7 +206,7 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
             val scrollY = location[1] - binding.scrollView.top
 
             binding.scrollView.post {
-                binding.scrollView.scrollTo(0, scrollY)
+                binding.scrollView.scrollTo(0, scrollY+100)
             }
         }
     }
@@ -214,11 +214,13 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
     private fun setButtonsClickListener()
     {
         binding.buttonEvent.setOnClickListener {
+            clearField()
             binding.textEventType.visibility = View.VISIBLE
             binding.eventTypeScroll.visibility = View.VISIBLE
         }
 
         binding.buttonCoworking.setOnClickListener {
+            clearField()
             binding.textCoworkingData.visibility = View.VISIBLE
             binding.buttonDateCoworkingPicker.visibility = View.VISIBLE
             binding.coworkingDate.visibility = View.VISIBLE

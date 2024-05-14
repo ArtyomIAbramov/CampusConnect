@@ -57,7 +57,7 @@ interface ICreateEventAndCoworking{
     suspend fun getAvailableSlotsAndPlaces(@Body data : EventDate) : Response<List<PlaceAndSlot>>
 
     @GET("place/events?")
-    suspend fun getEventsPlaces(@Query("date") date : EventDate) : Response<List<PlaceAndSlot>>
+    suspend fun getEventsPlaces(@Query("date") date : String) : Response<List<Place>>
 
     @POST("booking")
     suspend fun createBooking(@Header("Authorization") token: String, @Body booking: CreateBooking) : Response<Void>
