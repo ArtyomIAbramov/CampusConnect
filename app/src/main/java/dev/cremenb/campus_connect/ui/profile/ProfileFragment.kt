@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
 import dev.cremenb.campus_connect.ui.events.EventCatalogAdapter
 import dev.cremenb.data.models.RequestResult
@@ -113,8 +114,9 @@ class ProfileFragment : Fragment() {
 
     private fun setOptionAdapter()
     {
-        optionsAdapter = OptionsAdapter(requireActivity(), viewModel.getOptions())
+        optionsAdapter = OptionsAdapter(requireActivity(), viewModel.getOptions(), findNavController())
         optionsRecyclerView.adapter = optionsAdapter
+
     }
 
     override fun onDestroyView() {

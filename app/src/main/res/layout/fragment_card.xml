@@ -1,13 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
     tools:context=".ui.card.CardFragment">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello card" />
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_edittext_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textNameOfUserCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/montserrat_extra_bold"
+            android:gravity="center"
+            android:maxLines="2"
+            android:text="Личный пропуск кампусовца"
+            android:textColor="@color/primary_black_grey"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/qrCodeImageView"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:src="@drawable/qrkod"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textNameOfUserCard" />
+
+        <TextView
+            android:id="@+id/nameOfUserQrCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/montserrat_extra_bold"
+            android:text="Абрамов Артем Андреевич"
+            android:textColor="@color/primary_black_grey"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/qrCodeImageView" />
+
+        <TextView
+            android:id="@+id/bonusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/montserrat_semi_bold"
+            android:text="Бонусы"
+            android:textColor="@color/primary_black_grey"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameOfUserQrCard" />
+
+        <ImageView
+            android:id="@+id/bonusIconImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_bonus"
+            app:layout_constraintStart_toEndOf="@id/bonusCountTextView"
+            app:layout_constraintTop_toTopOf="@id/bonusCountTextView" />
+
+        <TextView
+            android:id="@+id/bonusCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="100"
+            android:textColor="@color/primary_black_grey"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bonusTextView" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/infoCardContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/info_rounded_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bonusCountTextView">
+
+            <ImageView
+                android:id="@+id/iconInfo"
+                android:layout_marginLeft="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_question"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <TextView
+                android:id="@+id/TextInfoCard1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="7dp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:text="Участвуешь в мероприятиях? "
+                android:textColor="@color/primary_black_grey"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/iconInfo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/TextInfoCard2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="7dp"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:text="Получай бонусы за них!"
+                android:textColor="@color/primary_black_grey"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@id/iconInfo"
+                app:layout_constraintTop_toBottomOf="@id/TextInfoCard1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

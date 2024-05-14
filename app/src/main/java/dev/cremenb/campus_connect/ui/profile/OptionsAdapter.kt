@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import dev.cremenb.api.models.Option
 import dev.cremenb.campus_connect.R
@@ -13,6 +15,7 @@ import dev.cremenb.campus_connect.R
 class OptionsAdapter (
     private val context: Context,
     private var dataList: List<Option>,
+    private val navController: NavController,
 ) : RecyclerView.Adapter<OptionsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +30,9 @@ class OptionsAdapter (
         holder.imageView.setImageResource(data.imageResId)
         holder.titleTextView.text = data.name
         holder.constraintView.setOnClickListener {
-
+            when (position) {
+                0 -> navController.navigate(R.id.action_navigation_profile_to_navigation_events)
+            }
         }
     }
 
