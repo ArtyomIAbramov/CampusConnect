@@ -69,7 +69,7 @@ class RegistrationFragment : Fragment() {
             when (result) {
                 is RequestResult.Success -> {
                     binding.defaultRegisterLayout.visibility =View.GONE
-                    findNavController().navigate(R.id.action_navigation_registration_to_navigation_home)
+                    findNavController().navigate(R.id.action_navigation_registration_to_navigation_card)
                 }
                 is RequestResult.Error -> {
                     binding.defaultRegisterLayout.visibility =View.VISIBLE

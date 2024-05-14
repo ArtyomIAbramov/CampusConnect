@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_navigation_registration_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_registration_to_navigation_card"
+            app:destination="@id/navigation_card" />
     </fragment>
 
     <fragment

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.campus_connect.MainActivity
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentEventsBinding
 import dev.cremenb.data.models.RequestResult
@@ -75,6 +76,12 @@ class EventsFragment : Fragment() {
         }
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        (activity as MainActivity).navView.visibility = View.VISIBLE
     }
 
     private fun setAdapter()
