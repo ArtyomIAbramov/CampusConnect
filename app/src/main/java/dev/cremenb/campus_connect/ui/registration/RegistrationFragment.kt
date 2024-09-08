@@ -19,10 +19,6 @@ import dev.cremenb.data.models.RequestResult
 @AndroidEntryPoint
 class RegistrationFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = RegistrationFragment()
-    }
-
     private var _binding : FragmentRegistrationBinding? = null
 
     private val binding get() = _binding!!
@@ -30,10 +26,6 @@ class RegistrationFragment : Fragment() {
     private val viewModel: RegistrationViewModel by viewModels()
 
     var selectedUniversityId : Int = 1
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,12 +72,9 @@ class RegistrationFragment : Fragment() {
                     binding.registrationLoginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 
@@ -95,21 +84,16 @@ class RegistrationFragment : Fragment() {
                     setupSpinner(result.data!!)
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
     }
 
     fun setupSpinner(universities: List<University>) {
-
         val adapter = ArrayAdapter(requireActivity().applicationContext, android.R.layout.simple_spinner_item, universities.map { it.initials })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 

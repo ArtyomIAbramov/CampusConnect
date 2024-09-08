@@ -16,7 +16,6 @@ import java.util.Locale
 
 class SlotsAdapter (
     private val context: Context,
-    private var dialog: BottomSheetDialog,
     private var dataList: List<BookingSlot>,
 ) : RecyclerView.Adapter<SlotsAdapter.ViewHolder>() {
 
@@ -45,10 +44,6 @@ class SlotsAdapter (
 
     override fun getItemCount(): Int {
         return dataList.size
-    }
-
-    fun getSelectedSlot() : Int {
-        return selectedTimePosition!!
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

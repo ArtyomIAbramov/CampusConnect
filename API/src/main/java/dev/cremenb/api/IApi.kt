@@ -1,6 +1,5 @@
 package dev.cremenb.api
 
-import dev.cremenb.api.models.Booking
 import dev.cremenb.api.models.Comment
 import dev.cremenb.api.models.CommentData
 import dev.cremenb.api.models.CreateBooking
@@ -19,7 +18,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Query
-import java.util.Date
 
 interface IProfile{
     @GET("Users/getbylogin")

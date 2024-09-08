@@ -13,19 +13,11 @@ import dev.cremenb.campus_connect.databinding.FragmentCardBinding
 @AndroidEntryPoint
 class CardFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = CardFragment()
-    }
     private var _binding : FragmentCardBinding? = null
 
     private val binding get() = _binding!!
 
     private val viewModel: CardViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

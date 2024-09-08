@@ -9,7 +9,6 @@ import dev.cremenb.database.models.ProfileDbo
 @Dao
 interface IProfileDao {
 
-    //TODO change Query request
     @Query("SELECT * FROM Profile")
     fun getProfile() : ProfileDbo?
 

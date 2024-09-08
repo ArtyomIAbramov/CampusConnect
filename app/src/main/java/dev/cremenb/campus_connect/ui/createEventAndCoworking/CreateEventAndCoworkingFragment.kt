@@ -30,10 +30,6 @@ interface SlotSelectionListener {
 @AndroidEntryPoint
 class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
 
-    companion object {
-        fun newInstance() = CreateEventAndCoworkingFragment()
-    }
-
     private val viewModel: CreateEventAndCoworkingViewModel by viewModels()
 
     private var _binding : FragmentCreateEventAndCoworkingBinding? = null
@@ -49,17 +45,11 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
     private lateinit var eventDate : Date
     private var eventTypeId : Int? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun slotSelected(eventId : Int, slot: BookingSlot) {
-
         viewModel.createCoworkong(eventId,slot.from,slot.to)
     }
 
     override fun eventPlaceSelected(eventId : Int) {
-
         eventName = binding.eventName.text.toString()
         eventDescription = binding.eventDescription.text.toString()
 
@@ -90,15 +80,11 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
                     setAdapter(1)
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 
@@ -109,15 +95,11 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
                     setAdapter(2)
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 
@@ -128,15 +110,11 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
                     Toast.makeText(context, "Вы успешно забронировали!", Toast.LENGTH_SHORT).show()
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 
@@ -147,15 +125,11 @@ class CreateEventAndCoworkingFragment : Fragment(), SlotSelectionListener  {
                     Toast.makeText(context, "Мероприятие создано!", Toast.LENGTH_SHORT).show()
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 

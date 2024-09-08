@@ -1,5 +1,6 @@
 package dev.cremenb.campus_connect.ui.events
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -74,6 +75,7 @@ class EventCatalogAdapter(
         return filteredList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(id : Int) {
         if (id == 4)
             filteredList = dataList
@@ -84,6 +86,7 @@ class EventCatalogAdapter(
         notifyDataSetChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun filter(query: String) {
         filteredList = if (query.isEmpty()) {
             dataList

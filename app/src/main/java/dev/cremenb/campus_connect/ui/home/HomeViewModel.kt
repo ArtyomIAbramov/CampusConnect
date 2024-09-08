@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor (
-    val repository: AuthorizationRepository
+    private val repository: AuthorizationRepository
 ) : ViewModel() {
 
 }

@@ -17,10 +17,6 @@ import dev.cremenb.utilities.VerticalSpaceItemDecoration
 @AndroidEntryPoint
 class EventCommentFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = EventCommentFragment()
-    }
-
     private var _binding : FragmentEventCommentBinding? = null
 
     private val binding get() = _binding!!
@@ -29,11 +25,6 @@ class EventCommentFragment : Fragment() {
     private lateinit var messageAdapter: CommentAdapter
 
     private val viewModel: EventCommentViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // TODO: Use the ViewModel
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,7 +81,7 @@ class EventCommentFragment : Fragment() {
     }
 
     private fun updateRecyclerView() {
-        messageAdapter = CommentAdapter(requireContext(), viewModel.allComments!!)
+        messageAdapter = CommentAdapter(viewModel.allComments!!)
         commentRecyclerView.adapter = messageAdapter
 
         commentRecyclerView.post {

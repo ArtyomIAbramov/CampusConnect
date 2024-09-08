@@ -16,7 +16,6 @@ abstract class DataBase : RoomDatabase() {
     abstract fun profileDao() : IProfileDao
 
     override fun clearAllTables() {
-        TODO("Not yet implemented")
     }
 
     override fun createInvalidationTracker(): InvalidationTracker {

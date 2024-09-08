@@ -13,9 +13,6 @@ import dev.cremenb.campus_connect.MainActivity
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
     private var _binding : FragmentHomeBinding? = null
 
     private val binding get() = _binding!!

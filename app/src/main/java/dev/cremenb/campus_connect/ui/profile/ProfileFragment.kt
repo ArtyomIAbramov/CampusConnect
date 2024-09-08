@@ -37,6 +37,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -114,7 +115,7 @@ class ProfileFragment : Fragment() {
 
     private fun setOptionAdapter()
     {
-        optionsAdapter = OptionsAdapter(requireActivity(), viewModel.getOptions(), findNavController())
+        optionsAdapter = OptionsAdapter(viewModel.getOptions(), findNavController())
         optionsRecyclerView.adapter = optionsAdapter
 
     }

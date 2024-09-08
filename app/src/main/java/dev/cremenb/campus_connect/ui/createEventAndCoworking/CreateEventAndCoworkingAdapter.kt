@@ -21,10 +21,10 @@ class CreateEventAndCoworkingAdapter(
     private var dataList: List<PlaceAndSlot>?,
     private var eventList: List<Place>?,
     private val listener: SlotSelectionListener,
-    private val one_is_coworking_two_is_event : Int,
+    private val oneIsCoworkingTwoIsEvent : Int,
 ) : RecyclerView.Adapter<CreateEventAndCoworkingAdapter.ViewHolder>()  {
 
-    var selectedTime : BookingSlot? = null
+    private var selectedTime : BookingSlot? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.item_place, parent, false)
@@ -41,7 +41,7 @@ class CreateEventAndCoworkingAdapter(
             holder.textViewAddress.text = data.place.adress
             holder.textViewCapacity.text = data.place.capacity.toString()
 
-            if (one_is_coworking_two_is_event == 1) {
+            if (oneIsCoworkingTwoIsEvent == 1) {
                 holder.buttonTakePart.setOnClickListener {
 
                     val dialog = BottomSheetDialog(holder.itemView.context)
@@ -52,7 +52,7 @@ class CreateEventAndCoworkingAdapter(
 
                     slotsRecyclerView.addItemDecoration(EdgeItemDecoration(10))
                     slotsRecyclerView.layoutManager = GridLayoutManager(context, 2)
-                    val slotsAdapter = SlotsAdapter(context, dialog, data.bookingSlot)
+                    val slotsAdapter = SlotsAdapter(context, data.bookingSlot)
                     slotsRecyclerView.adapter = slotsAdapter
 
                     val closeButton = bottomSheetView.findViewById<Button>(R.id.button_select)

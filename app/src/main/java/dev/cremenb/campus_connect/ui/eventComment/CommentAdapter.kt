@@ -1,24 +1,15 @@
 package dev.cremenb.campus_connect.ui.eventComment
 
-import android.content.Context
-import android.content.res.ColorStateList
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import dev.cremenb.api.models.Comment
 import dev.cremenb.campus_connect.R
 import dev.cremenb.utilities.DateFormatter
 
 class CommentAdapter(
-    context: Context,
     private val dataList: List<Comment>
 ) :  RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 

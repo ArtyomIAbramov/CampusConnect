@@ -13,7 +13,6 @@ import dev.cremenb.api.models.Option
 import dev.cremenb.campus_connect.R
 
 class OptionsAdapter (
-    private val context: Context,
     private var dataList: List<Option>,
     private val navController: NavController,
 ) : RecyclerView.Adapter<OptionsAdapter.ViewHolder>() {

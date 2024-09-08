@@ -67,9 +67,9 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.compiler)
     implementation(libs.kotlinx.coroutines.android)
-    implementation (libs.squareup.picasso)
+    implementation(libs.squareup.picasso)
 
-    implementation (libs.lottie)
+    implementation(libs.lottie)
 
     implementation(project(":Data"))
     implementation(project(":DataBase"))

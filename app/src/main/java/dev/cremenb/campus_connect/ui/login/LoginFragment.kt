@@ -16,19 +16,11 @@ import dev.cremenb.data.models.RequestResult
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
-
     private var _binding : FragmentLoginBinding? = null
 
     private val binding get() = _binding!!
 
     private val viewModel: LoginViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

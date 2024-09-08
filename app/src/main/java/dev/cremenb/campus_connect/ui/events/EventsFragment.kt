@@ -22,10 +22,6 @@ import dev.cremenb.utilities.VerticalSpaceItemDecoration
 @AndroidEntryPoint
 class EventsFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = EventsFragment()
-    }
-
     private lateinit var eventRecyclerView: RecyclerView
     private lateinit var eventAdapter: EventCatalogAdapter
 
@@ -34,11 +30,6 @@ class EventsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: EventsViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,15 +54,11 @@ class EventsFragment : Fragment() {
                     setAdapter()
                 }
                 is RequestResult.Error -> {
-                    // Обработка ошибки
                 }
                 is RequestResult.Exception -> {
-                    // Обработка исключения
                 }
                 is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
                 }
-                // Другие возможные состояния
             }
         }
 
