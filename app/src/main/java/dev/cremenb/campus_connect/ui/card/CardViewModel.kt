@@ -9,6 +9,4 @@ import javax.inject.Inject
 class CardViewModel @Inject constructor (
     private val repository: EventsRepository,
 ) : ViewModel() {
-
-    // TODO: Implement the ViewModel
 }

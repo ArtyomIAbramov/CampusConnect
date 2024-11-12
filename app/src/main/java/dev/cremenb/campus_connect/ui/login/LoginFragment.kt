@@ -1,5 +1,7 @@
 package dev.cremenb.campus_connect.ui.login
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.airbnb.lottie.LottieDrawable
 import dagger.hilt.android.AndroidEntryPoint
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentLoginBinding
-import dev.cremenb.data.models.RequestResult
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -26,78 +26,43 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel.checkAuthentication()
+        checkAuthentication()
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         setButtonsClickListener()
-        observeResults()
 
         val root: View = binding.root
         return root
     }
 
+    private fun checkAuthentication() {
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+        val isLoggedInFromPrefs = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        if(isLoggedInFromPrefs) {
+            binding.defaultLoginLayout.visibility=View.GONE
+
+            findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
+        }
+
+    }
+
     private fun setButtonsClickListener()
     {
         binding.loginButton.setOnClickListener {
-            val login = binding.loginInput.text.toString()
-            val password = binding.passwordInput.text.toString()
-            viewModel.login(login, password)
+            val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
+
+            val editor = sharedPreferences.edit()
+            editor.putBoolean("isLoggedIn", true)
+            editor.apply()
+
+            binding.defaultLoginLayout.visibility=View.GONE
+
+            findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
         }
 
         binding.registerButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_login_to_navigation_registration)
-        }
-    }
-
-    private fun observeResults()
-    {
-        viewModel.loginResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    binding.defaultLoginLayout.visibility=View.GONE
-
-                    findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
-                }
-                is RequestResult.Error -> {
-                    binding.defaultLoginLayout.visibility=View.VISIBLE
-
-                    binding.loginError.visibility = View.VISIBLE
-                    binding.loginError.text = "Проверьте логин"
-
-                    binding.passwordError.visibility = View.VISIBLE
-                    binding.passwordError.text = "Проверьте пароль"
-
-                    binding.loginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
-                    binding.passwordInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
-                }
-
-                is RequestResult.Exception -> {
-                    binding.defaultLoginLayout.visibility=View.VISIBLE
-                }
-
-                is RequestResult.InProgress -> {}
-            }
-        }
-
-        viewModel.authenticationResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    binding.defaultLoginLayout.visibility=View.GONE
-
-                    findNavController().navigate(R.id.action_navigation_login_to_navigation_card)
-                }
-                is RequestResult.Error -> {
-                    binding.defaultLoginLayout.visibility=View.VISIBLE
-                }
-
-                is RequestResult.Exception -> {
-                    binding.defaultLoginLayout.visibility=View.VISIBLE
-                }
-
-                is RequestResult.InProgress -> {
-                    binding.defaultLoginLayout.visibility=View.GONE
-                }
-            }
         }
     }
 }

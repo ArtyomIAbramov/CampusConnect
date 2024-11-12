@@ -13,12 +13,18 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.api.models.Event
+import dev.cremenb.api.models.Gender
+import dev.cremenb.api.models.Place
+import dev.cremenb.api.models.Profile
+import dev.cremenb.api.models.University
 import dev.cremenb.campus_connect.R
 import dev.cremenb.campus_connect.databinding.FragmentProfileBinding
 import dev.cremenb.campus_connect.ui.events.EventCatalogAdapter
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.utilities.HorizontalSpaceItemDecoration
 import dev.cremenb.utilities.VerticalSpaceItemDecoration
+import java.util.Date
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -40,8 +46,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        viewModel.getProfile()
     }
 
     override fun onCreateView(
@@ -62,25 +66,72 @@ class ProfileFragment : Fragment() {
         optionsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         setOptionAdapter()
 
-        viewModel.profileResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    viewModel.profie = result.data
-                    binding.nameTextView.text = viewModel.profie!!.login
-                    setEventAdapter()
-                }
 
-                is RequestResult.Error -> {
+        val profile = Profile(
+            id = "12345",
+            name = "Лев",
+            surname = "Ксенофонтов",
+            login = "ksone",
+            gender = Gender(id = 1, name = "Мужской"),
+            phone = "+79991234567",
+            email = "ksone@example.com",
+            token = "your_token_here",
+            university = University(
+                id = 1,
+                name = "ИГЭУ",
+                initials = "ИГЭУ",
+                logo = null,
+                description = null,
+            ),
+            events = mutableListOf(
+                Event(
+                    id = "event1",
+                    name = "Концерт",
+                    thumbnail = "https://static.re-store.ru/upload/static/re/yamaha-tw-e3a/01@3x.jpg",
+                    description = "Концерт классической музыки",
+                    date = Date(),
+                    place = Place(
+                        name = "Б231",
+                    ),
+                    status = null,
+                    users = null,
+                    isParticipant = false
+                ),
+                Event(
+                    id = "event12",
+                    name = "Конференция",
+                    thumbnail = "https://blog.ostrovok.ru/wp-content/uploads/2022/11/2%D0%BA%D0%BE%D0%BF%D0%B8%D1%8F-15.jpg",
+                    description = "Конференция по математике",
+                    date = Date(),
+                    place = Place(
+                        name = "Д431",
+                    ),
+                    status = null,
+                    users = null,
+                    isParticipant = false
+                ),
+                Event(
+                    id = "event13",
+                    name = "Собрание старост",
+                    thumbnail = "https://swsu.ru/upload/iblock/a84/63ta4945szg4pztp3yq8di8mhyo29g3e/MG_8771.jpg",
+                    description = "Собрание старост первого курса",
+                    date = Date(),
+                    place = Place(
+                        name = "A341",
+                    ),
+                    status = null,
+                    users = null,
+                    isParticipant = true
+                ),
+            ),
+            bookings = null,
+            profileImageUrl = "",
+            card = "1234567890123456"
+        )
 
-                }
-                is RequestResult.Exception -> {
-
-                }
-                is RequestResult.InProgress -> {
-
-                }
-            }
-        }
+        viewModel.profie = profile
+        binding.nameTextView.text = viewModel.profie!!.name
+        setEventAdapter()
 
         return root
     }

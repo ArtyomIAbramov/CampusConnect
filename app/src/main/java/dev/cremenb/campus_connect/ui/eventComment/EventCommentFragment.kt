@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import dev.cremenb.api.models.Comment
 import dev.cremenb.campus_connect.MainActivity
 import dev.cremenb.campus_connect.databinding.FragmentEventCommentBinding
 import dev.cremenb.data.models.RequestResult
 import dev.cremenb.utilities.VerticalSpaceItemDecoration
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class EventCommentFragment : Fragment() {
@@ -34,48 +38,30 @@ class EventCommentFragment : Fragment() {
         _binding = FragmentEventCommentBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        viewModel.getComments(arguments?.getString("eventId")!!)
         (activity as MainActivity).navView.visibility = View.GONE
 
         initView()
 
-        viewModel.getCommentResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    viewModel.allComments = result.data
-                    updateRecyclerView()
-                }
-                is RequestResult.Error -> {
-                    // Обработка ошибки
-                }
-                is RequestResult.Exception -> {
-                    // Обработка исключения
-                }
-                is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
-                }
-                // Другие возможные состояния
-            }
-        }
+        val comments = mutableListOf(
+            Comment(
+                text = "Круто мероприятие",
+                createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:30"),
+                login = "user1"
+            ),
+            Comment(
+                text = "Все отлично, спасибо!",
+                createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:35"),
+                login = "user2"
+            ),
+            Comment(
+                text = "Всё понравилось \uD83D\uDE04",
+                createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:40"),
+                login = "user1"
+            ),
+        )
 
-        viewModel.postCommentsResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    viewModel.allComments = result.data
-                    updateRecyclerView()
-                }
-                is RequestResult.Error -> {
-                    // Обработка ошибки
-                }
-                is RequestResult.Exception -> {
-                    // Обработка исключения
-                }
-                is RequestResult.InProgress -> {
-                    // Обработка состояния в процессе
-                }
-                // Другие возможные состояния
-            }
-        }
+        viewModel.allComments = comments
+        updateRecyclerView()
 
         return root
     }
@@ -103,7 +89,33 @@ class EventCommentFragment : Fragment() {
         sendButton.setOnClickListener {
             val message = messageEditText.text.toString()
             if (message.isNotEmpty()) {
-                viewModel.postComment(arguments?.getString("eventId")!!, message)
+
+                val comments = mutableListOf(
+                    Comment(
+                        text = "Круто мероприятие",
+                        createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:30"),
+                        login = "user1"
+                    ),
+                    Comment(
+                        text = "Все отлично, спасибо!",
+                        createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:35"),
+                        login = "user2"
+                    ),
+                    Comment(
+                        text = "Всё понравилось \uD83D\uDE04",
+                        createdAt = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).parse("15.03.2023 10:40"),
+                        login = "user1"
+                    ),
+
+                    Comment(
+                        text = message,
+                        createdAt = Date(),
+                        login = "user1"
+                    ),
+                )
+                viewModel.allComments = comments
+                updateRecyclerView()
+
                 messageEditText.text.clear()
             }
         }

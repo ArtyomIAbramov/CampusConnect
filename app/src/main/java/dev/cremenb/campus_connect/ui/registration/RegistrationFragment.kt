@@ -34,62 +34,47 @@ class RegistrationFragment : Fragment() {
 
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        viewModel.getUniversities()
+        setupSpinner(getUniversities())
 
         setButtonsClickListener()
-        observeRegistrationResult()
 
         return root
+    }
+
+    private fun getUniversities(): List<University> {
+
+        val list = listOf(
+            University(
+                id = 0,
+                name = "ИГЭУ",
+                initials = "ИГЭУ",
+                logo = null,
+                description = null,
+            ),
+            University(
+                id = 0,
+                name = "ИГХТУ",
+                initials = "ИГХТУ",
+                logo = null,
+                description = null,
+            ),
+            University(
+                id = 0,
+                name = "ИВГУ",
+                initials = "ИВГУ",
+                logo = null,
+                description = null,
+            ),
+        )
+
+        return list
     }
 
     private fun setButtonsClickListener()
     {
         binding.registrationButton.setOnClickListener {
-            val name = binding.registrationNameInput.text.toString()
-            val surname = binding.registrationSurnameInput.text.toString()
-            val login = binding.registrationLoginInput.text.toString()
-            val gender = if (binding.maleRadioButton.isChecked) 1 else 2
-            val password = binding.registrationPasswordInput.text.toString()
-            viewModel.register(name, surname, login, gender, password, selectedUniversityId)
-        }
-    }
-
-    private fun observeRegistrationResult()
-    {
-        viewModel.registrationResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    binding.defaultRegisterLayout.visibility =View.GONE
-                    findNavController().navigate(R.id.action_navigation_registration_to_navigation_card)
-                }
-                is RequestResult.Error -> {
-                    binding.defaultRegisterLayout.visibility =View.VISIBLE
-
-                    binding.loginError.visibility = View.VISIBLE
-                    binding.loginError.text = "Такой логин уже есть"
-
-                    binding.registrationLoginInput.setBackgroundResource(R.drawable.rounded_edittext_background_error)
-                }
-                is RequestResult.Exception -> {
-                }
-                is RequestResult.InProgress -> {
-                }
-            }
-        }
-
-        viewModel.universitiesResult.observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is RequestResult.Success -> {
-                    setupSpinner(result.data!!)
-                }
-                is RequestResult.Error -> {
-                }
-                is RequestResult.Exception -> {
-                }
-                is RequestResult.InProgress -> {
-                }
-            }
+            binding.defaultRegisterLayout.visibility =View.GONE
+            findNavController().navigate(R.id.action_navigation_registration_to_navigation_card)
         }
     }
 

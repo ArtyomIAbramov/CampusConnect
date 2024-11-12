@@ -17,27 +17,8 @@ class EventsViewModel @Inject constructor (
     private val repository: EventsRepository,
 ) : ViewModel() {
 
-    var eventsResult = MutableLiveData<RequestResult<List<Event>>>()
-
     var allEvents: List<Event>? = null
 
-    var takePartResult = MutableLiveData<RequestResult<Void>>()
-
-    fun getEvents() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.getAllEvents()
-                eventsResult.postValue(response)
-            }
-        }
-    }
-
     fun takePart(id : String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.takePart(id)
-                takePartResult.postValue(response)
-            }
-        }
     }
 }

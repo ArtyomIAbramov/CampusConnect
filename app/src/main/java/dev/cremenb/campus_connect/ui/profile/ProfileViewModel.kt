@@ -19,18 +19,7 @@ class ProfileViewModel @Inject constructor (
     private val repository: ProfileRepository
 ) : ViewModel() {
 
-    var profileResult = MutableLiveData<RequestResult<Profile>>()
-
     var profie: Profile? = null
-
-    fun getProfile() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.getProfile()
-                profileResult.postValue(response)
-            }
-        }
-    }
 
     fun getOptions() : List<Option> {
         return listOf(

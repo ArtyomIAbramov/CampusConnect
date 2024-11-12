@@ -18,30 +18,5 @@ class EventCommentViewModel @Inject constructor (
     private val repository: CommentsRepository,
 ) : ViewModel() {
 
-    var getCommentResult = MutableLiveData<RequestResult<List<Comment>>>()
-
     var allComments: List<Comment>? = null
-
-    var postCommentsResult = MutableLiveData<RequestResult<List<Comment>>>()
-
-    fun getComments(eventId : String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.getComments(eventId)
-                getCommentResult.postValue(response)
-            }
-        }
-    }
-
-    fun postComment(eventId : String, text : String ) {
-
-        val commentData = CommentData(eventId, text)
-
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val response = repository.postComment(commentData)
-                postCommentsResult.postValue(response)
-            }
-        }
-    }
 }
